@@ -1,16 +1,12 @@
 import time
+import random
+print("The Game:")
 
-print("Hello World")
+print("Kartenstapel:")
+stapelGroesse = 5
+while stapelGroesse >0:
+  print(random.randrange(0, 101, 2))
+  time.sleep(1.5)
+  stapelGroesse -= 1
 
-felixstinks = True
-fs = 2
-while felixstinks:
-  print("Felix müffelt")
-  time.sleep(0.5)
-  fs *= 2
-  print(fs)
-
-  if fs >= 100:
-    felixstinks = False
-else:
-  print("Tut er trotzdem!")
+print("der Stapel ist leer")
