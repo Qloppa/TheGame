@@ -1,5 +1,16 @@
 import time
 import random
+
+class Spielkarte:
+  def __init__(self, value):
+    self.value = value
+
+  def getValue(self):
+    return self.value
+
+#A = Spielkarte(137)
+#print(A.getValue())
+
 print("The Game:")
 
 print("Kartenstapel:")
