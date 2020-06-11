@@ -8,16 +8,21 @@ class Spielkarte:
   def getValue(self):
     return self.value
 
-#A = Spielkarte(137)
-#print(A.getValue())
+class Kartenstapel:
+  
+  spielKarten = [Spielkarte(1), Spielkarte(2), Spielkarte(3), Spielkarte(4), Spielkarte(5)]
+  random.shuffle(spielKarten)
 
+  def __init__(self):
+    print("Kartenstapel initialisiert")
+
+ 
 print("The Game:")
 
 print("Kartenstapel:")
-stapelGroesse = 5
-while stapelGroesse >0:
-  print(random.randrange(0, 101, 2))
-  time.sleep(1.5)
-  stapelGroesse -= 1
 
+for spielKarte in Kartenstapel.spielKarten:
+  time.sleep(1.5)
+  print(spielKarte.getValue())
+  
 print("der Stapel ist leer")
