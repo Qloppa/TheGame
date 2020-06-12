@@ -1,5 +1,6 @@
 import time
 import random
+import numpy as np
 
 class Spielkarte:
   def __init__(self, value):
@@ -9,14 +10,21 @@ class Spielkarte:
     return self.value
 
 class Kartenstapel:
-  
-  spielKarten = [Spielkarte(1), Spielkarte(2), Spielkarte(3), Spielkarte(4), Spielkarte(5)]
+
+  spielKarten = []
+  spK = np.arange(1,101, 1).tolist() #spK = Spielkarten
+  #print(spK)
+
+  for spK0 in spK:
+    spielKarten.append(Spielkarte(spK0))
+
+  #spielKarten = [Spielkarte(1), Spielkarte(2), Spielkarte(3), Spielkarte(4), Spielkarte(5)] --ALT--
   random.shuffle(spielKarten)
+
 
   def __init__(self):
     print("Kartenstapel initialisiert")
 
- 
 print("The Game:")
 
 print("Kartenstapel:")
