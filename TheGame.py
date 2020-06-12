@@ -12,7 +12,7 @@ class Spielkarte:
 class Kartenstapel:
 
   spielKarten = []
-  spK = np.arange(1,101, 1).tolist() #spK = Spielkarten
+  spK = np.arange(1,101, 1).tolist() #spK = Spielkarten // Erstellt eine Liste der Zahlen 1 - 100
   #print(spK)
 
   for spK0 in spK:
