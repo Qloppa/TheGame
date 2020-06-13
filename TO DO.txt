@@ -1,0 +1,18 @@
+TO DO:
+    PRIORITÄT {HOCH}:
+
+    - gqwg qweg qw
+    - qwe qwe we
+    - wqer wqe we rw er wqerwgwqw
+
+    PRIORITÄT {MITTEL}:
+
+    - gqwg qweg qw
+    - qwe qwe we
+    - wqer wqe we rw er wqerwgwqw
+
+    PRIORITÄT {Niedrig}:
+
+    - gqwg qweg qw
+    - qwe qwe we
+    - wqer wqe we rw er wqerwgwqw
