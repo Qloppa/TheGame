@@ -3,6 +3,9 @@ import random
 import numpy as np
 from tkinter import *
 
+def doNothing():
+  print("OK, I do Nothing")
+
 """ 
 
 - GUI Section -
@@ -23,6 +26,23 @@ UM DAS GUI RAUSZUNEHMEN EINFACH RAUTEN AM ANFANG DER ZEILE ENTFERNEN!
 #"""-----------------------------------GUI---------------------------------------#
 
 root = Tk()
+root.title("THE GAME!")
+root.iconbitmap("THE_GAME_ICON.ico")
+
+menu = Menu(root)
+subMenu = Menu(menu)
+root.config(menu=menu)
+
+menu.add_cascade(label="Spiel", menu=subMenu)
+subMenu.add_command(label="Neues Spiel", command=doNothing)
+subMenu.add_command(label="1337", command=doNothing)
+subMenu.add_separator()
+subMenu.add_command(label="Beenden", command=root.destroy)
+
+editMenu = Menu(menu)
+menu.add_cascade(label="Einstellungen", menu=editMenu)
+editMenu.add_command(label="1337", command=doNothing)
+
 topFrame = Frame(root)
 topFrame.pack()
 bottomFrame = Frame(root)
