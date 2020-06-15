@@ -1,7 +1,10 @@
 CHANGELOG:
 
+15-06-20:
+    * GUI Sektion hinzugefügt.
+    * GUI Window hinzugefügt.
+    * GUI Testobjekte hinzugefügt.
+
 13-06-20:
-    * gwgewhjejeqwrhrwejwerhwrzwtj
-    * qgqwerg qeh qwe gwq gw eg
-    * 34tzergqefbeqwrbqebebrbqb
+    * Changelog wurde hinzugefügt.
     

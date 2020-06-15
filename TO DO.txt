@@ -1,18 +1,12 @@
 TO DO:
     PRIORITÄT {HOCH}:
 
-    - gqwg qweg qw
-    - qwe qwe we
-    - wqer wqe we rw er wqerwgwqw
+    - GUI
 
     PRIORITÄT {MITTEL}:
 
-    - gqwg qweg qw
-    - qwe qwe we
-    - wqer wqe we rw er wqerwgwqw
+    - Spielfunktionen
 
     PRIORITÄT {Niedrig}:
 
-    - gqwg qweg qw
-    - qwe qwe we
-    - wqer wqe we rw er wqerwgwqw
+    - ?

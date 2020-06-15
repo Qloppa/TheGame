@@ -1,6 +1,42 @@
 import time
 import random
 import numpy as np
+from tkinter import *
+
+""" 
+
+- GUI Section -
+Das GUI werde ich hier oben machen soll das dann nachher in diesem File bleiben oder
+machen wir das in ein anderes? 
+
+Das Modul was ich nehme wird erstmal TKinter sein. Gibt viele Videos darüber bei Youtube.
+Gibt aber auch noch alternativen die vielleicht noch besser sind aber erst mal für Hauptmenü oder
+eine minimale Spieloberfläche wie bei Solitär oder Hearts da muss man grafisch dann noch nicht so
+viel umsetzen! 
+
+
+
+UM DAS GUI RAUSZUNEHMEN EINFACH RAUTEN AM ANFANG DER ZEILE ENTFERNEN!
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+"""
+
+#"""-----------------------------------GUI---------------------------------------#
+
+root = Tk()
+topFrame = Frame(root)
+topFrame.pack()
+bottomFrame = Frame(root)
+bottomFrame.pack()
+
+Label1 = Label(topFrame, text="THE GAME")
+Label1.pack()
+Label2 = Label(topFrame, text="")
+Label2.pack()
+Quit = Button(bottomFrame, text="Beenden", command=root.destroy)
+Quit.pack()
+root.mainloop()
+
+#"""-----------------------------------GUI---------------------------------------#
 
 class Spielkarte:
   def __init__(self, value):
@@ -49,6 +85,7 @@ print("Handkarten:")
 
 HandKarten = HandKarten()
 HandKarten.nimmHandKarten(7)
+
 
 for karte in HandKarten.handKarten:
   time.sleep(1.5)
