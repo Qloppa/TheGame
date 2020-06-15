@@ -31,12 +31,7 @@ bottomFrame.pack()
 Label1 = Label(topFrame, text="THE GAME")
 Label1.pack()
 
-testList = [3234, 234, 434234, 234234, 23424333, 2342342, 442626]
-
-varValue = len(testList)
 listHandkarten = []
-Label2 = Label(topFrame, text=f"Du hälst jetzt " + str(len(listHandkarten)) + " Karten in deiner Hand.")
-Label2.pack()
 Quit = Button(bottomFrame, text="Beenden", command=root.destroy)
 Quit.pack()
 
@@ -106,6 +101,6 @@ for spielKarte in Kartenstapel.spielKarten:
   
 print("der Stapel ist leer")
 
-Label2 = Label(topFrame, text=f"Du hälst jetzt " + str(len(listHandkarten)) + " Karten in deiner Hand.")
+Label2 = Label(topFrame, text=f"Du hälst jetzt " + str(len(listHandkarten)) + " Karten in deiner Hand.\n" + "Es sind die Zahlen: " + str(listHandkarten))
 Label2.pack()
 root.mainloop()
