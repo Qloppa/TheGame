@@ -30,7 +30,12 @@ bottomFrame.pack()
 
 Label1 = Label(topFrame, text="THE GAME")
 Label1.pack()
-Label2 = Label(topFrame, text="")
+
+testList = [3234, 234, 434234, 234234, 23424333, 2342342, 442626]
+
+varValue = len(testList)
+
+Label2 = Label(topFrame, text=f"Du hälst jetzt " + str(varValue) + " Karten in deiner Hand.")
 Label2.pack()
 Quit = Button(bottomFrame, text="Beenden", command=root.destroy)
 Quit.pack()
