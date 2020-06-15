@@ -2,10 +2,11 @@ TO DO:
     PRIORITÄT {HOCH}:
 
     - GUI
-
+    - Spielfunktionen
+    
     PRIORITÄT {MITTEL}:
 
-    - Spielfunktionen
+    - ?
 
     PRIORITÄT {Niedrig}:
 
