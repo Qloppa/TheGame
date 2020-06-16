@@ -26,7 +26,7 @@ def getRev():
 def doNothing():
     print("OK, I do Nothing")
 
-getRev()
+getRev() # Ersetzt die alte gegen die neue Revisionsnummer und gibt diese aus.
 
 
 
