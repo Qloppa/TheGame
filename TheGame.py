@@ -15,26 +15,24 @@ def safeList(myList, filename):
 
 def getRev():
     rev_old = loadList("rev_old_file.npy")  # Lädt die alte Revisionsnummer
-    rev_old
     e = int(rev_old[0])
     c = e + 1
-    rev_new = int(c)
+    rev_new = str(c)
     rev_old = [rev_new]
-    print(f"Version: " + TG_Version + "(Rev." + str(rev_old[0]) + ")")
+    print(f"Version: " + TG_Version + "(Rev." + rev_new + ")")
     safeList(rev_old, "rev_old_file") #Speichert die Revisionsnummer
+
+def useRev():
+    rev_old = loadList("rev_old_file.npy")   # Lädt die alte Revisionsnummer
+    return rev_old[0]
 
 def doNothing():
     print("OK, I do Nothing")
 
 getRev() # Ersetzt die alte gegen die neue Revisionsnummer und gibt diese aus.
 
+""" - GUI Section -
 
-
-
-
-""" 
-
-- GUI Section -
 Das GUI werde ich hier oben machen soll das dann nachher in diesem File bleiben oder
 machen wir das in ein anderes? 
 
@@ -46,8 +44,7 @@ viel umsetzen!
 
 
 UM DAS GUI RAUSZUNEHMEN EINFACH RAUTEN AM ANFANG DER ZEILE ENTFERNEN!
-↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-"""
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓"""
 
 # """-----------------------------------GUI---------------------------------------#
 root = Tk()
@@ -58,9 +55,10 @@ def aboutTG():
     newWindow = Toplevel(root)
     newWindow.title("Über The Game")
     newWindow.iconbitmap("THE_GAME_ICON.ico")
-    newWindow.geometry("250x30")
-    Label1 = Label(newWindow, text="The Game\n" +
-                   "by Qloppa & Balboran")
+    newWindow.geometry("250x60")
+    Label1 = Label(newWindow, text=f"The Game\n" +
+                   "by Qloppa & Balboran\n" +
+                   "Ver: " + TG_Version + "." + str(useRev()))
     Label1.pack()
 
 
