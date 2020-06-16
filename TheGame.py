@@ -4,6 +4,8 @@ import numpy as np
 from tkinter import *
 
 TG_Version = "0.0.1"
+Final = False
+
 
 def loadList(filename):
     # Die Dateiendung sollte .npy sein [Numpy]
@@ -13,14 +15,27 @@ def loadList(filename):
 def safeList(myList, filename):
     np.save(filename, myList)
 
-def getRev():
+if Final == False: #DEAKTIVIERT DAS ZÄHLEN DER REVISIONEN IM FINALEN BUILD
+    def getRev():
+        rev_old = loadList("rev_old_file.npy")  # Lädt die alte Revisionsnummer
+        e = int(rev_old[0])
+        c = e + 1
+        rev_new = str(c)
+        rev_old = [rev_new]
+        print(f"Version " + TG_Version + "(Rev." + rev_new + ")")
+        safeList(rev_old, "rev_old_file") #Speichert die Revisionsnummer
+else:
     rev_old = loadList("rev_old_file.npy")  # Lädt die alte Revisionsnummer
     e = int(rev_old[0])
-    c = e + 1
+    c = e
     rev_new = str(c)
     rev_old = [rev_new]
-    print(f"Version: " + TG_Version + "(Rev." + rev_new + ")")
-    safeList(rev_old, "rev_old_file") #Speichert die Revisionsnummer
+    if Final == True:
+        TG_Version = "(Release): " + TG_Version
+    def getRev():
+        pass
+    print(f"Version " + TG_Version + "(Rev." + rev_new + ")")
+
 
 def useRev():
     rev_old = loadList("rev_old_file.npy")   # Lädt die alte Revisionsnummer
@@ -58,9 +73,8 @@ def aboutTG():
     newWindow.geometry("250x60")
     Label1 = Label(newWindow, text=f"The Game\n" +
                    "by Qloppa & Balboran\n" +
-                   "Ver: " + TG_Version + "." + str(useRev()))
+                   "Ver. " + TG_Version + "." + str(useRev()))
     Label1.pack()
-
 
 menu = Menu(root)
 subMenu = Menu(menu)
