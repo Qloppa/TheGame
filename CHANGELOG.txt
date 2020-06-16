@@ -1,5 +1,11 @@
 CHANGELOG:
 
+16-06-20:
+    * Programmversion + Revisionsnummer hinzugefügt
+        ~Speichert jetzt eine Revisionsnummer bei jedem Speichervorgang.
+    * Timer zwischen den Karten sind jetzt Kommentare.
+    * About The Game hinzugefügt.
+
 15-06-20:
     * GUI Sektion hinzugefügt.
     * GUI Window hinzugefügt.
