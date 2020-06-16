@@ -17,9 +17,9 @@ def getRev():
     rev_old = loadList("rev_old_file.npy")  # Lädt die alte Revisionsnummer
     e = int(rev_old[0])
     c = e + 1
-    rev_new = int(c)
+    rev_new = str(c)
     rev_old = [rev_new]
-    print(f"Version: " + TG_Version + "(Rev." + str(rev_old[0]) + ")")
+    print(f"Version: " + TG_Version + "(Rev." + rev_new + ")")
     safeList(rev_old, "rev_old_file") #Speichert die Revisionsnummer
 
 def useRev():
@@ -31,13 +31,8 @@ def doNothing():
 
 getRev() # Ersetzt die alte gegen die neue Revisionsnummer und gibt diese aus.
 
+""" - GUI Section -
 
-
-
-
-""" 
-
-- GUI Section -
 Das GUI werde ich hier oben machen soll das dann nachher in diesem File bleiben oder
 machen wir das in ein anderes? 
 
@@ -49,8 +44,7 @@ viel umsetzen!
 
 
 UM DAS GUI RAUSZUNEHMEN EINFACH RAUTEN AM ANFANG DER ZEILE ENTFERNEN!
-↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-"""
+↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓"""
 
 # """-----------------------------------GUI---------------------------------------#
 root = Tk()
