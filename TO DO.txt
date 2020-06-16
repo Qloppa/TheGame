@@ -3,6 +3,8 @@ TO DO:
 
     - GUI
     - Spielfunktionen
+    - Probleme beim Pushen seit letztem Update
+        ~Weiß nicht wieso? Könnte an der neuen Datei liegen?
     
     PRIORITÄT {MITTEL}:
 
