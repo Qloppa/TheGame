@@ -2,7 +2,9 @@ import time
 import random
 import numpy as np
 from tkinter import *
-
+import tkinter as tk
+from PIL import ImageTk
+from PIL import Image
 TG_Version = "0.0.1"
 Final = False
 
@@ -65,6 +67,15 @@ UM DAS GUI RAUSZUNEHMEN EINFACH RAUTEN AM ANFANG DER ZEILE ENTFERNEN!
 root = Tk()
 root.title("THE GAME!")
 root.iconbitmap("THE_GAME_ICON.ico")
+root.geometry("800x800")
+
+image2 = Image.open("./Kartengrafiken/Spielkarte_1.png")
+#image2.show()
+image1 = ImageTk.PhotoImage(image2)
+background_label = tk.Label(root, image=image1)
+background_label.image1=image1
+background_label.place(x=0, y=0, height=800, width=800)
+
 
 def aboutTG():
     newWindow = Toplevel(root)
@@ -104,6 +115,7 @@ Quit.pack()
 
 
 # """-----------------------------------GUI---------------------------------------#
+
 class Spielkarte:
     def __init__(self, value):
         self.value = value
