@@ -3,11 +3,13 @@ TO DO:
 
     - GUI
     - Spielfunktionen
-    - Probleme beim Pushen seit letztem Update
-        ~Weiß nicht wieso? Könnte an der neuen Datei liegen?
+    - Karten "bauen"
+
     
     PRIORITÄT {MITTEL}:
 
+    - Probleme beim Pushen seit letztem Update
+        ~Weiß nicht wieso? Könnte an der neuen Datei liegen?
     - Struktur Code? (Einteilung, Ordnung, Sauberer Code?)
 
     PRIORITÄT {Niedrig}:
