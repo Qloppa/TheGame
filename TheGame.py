@@ -5,7 +5,7 @@ from tkinter import *
 import tkinter as tk
 from PIL import ImageTk
 from PIL import Image
-TG_Version = "0.0.1"
+TG_Version = "0.0.2"
 Final = False
 
 #testcomment
@@ -68,15 +68,9 @@ UM DAS GUI RAUSZUNEHMEN EINFACH RAUTEN AM ANFANG DER ZEILE ENTFERNEN!
 root = Tk()
 root.title("THE GAME!")
 root.iconbitmap("THE_GAME_ICON.ico")
-root.geometry("800x800")
+root.geometry("1920x1080")
 
-image2 = Image.open("./Kartengrafiken/Spielkarte_MUSTER_0.png")
-#image2.show()
-image1 = ImageTk.PhotoImage(image2)
-background_label = tk.Label(root, image=image1)
-background_label.image1=image1
-background_label.place(x=0, y=0, height=800, width=800)
-
+# """-----------------------------------MENU---------------------------------------#
 
 def aboutTG():
     newWindow = Toplevel(root)
@@ -102,24 +96,114 @@ editMenu = Menu(menu)
 menu.add_cascade(label="Einstellungen", menu=editMenu)
 editMenu.add_command(label="1337", command=doNothing)
 
+# """-----------------------------------IMAGE---------------------------------------#
+scale = 0.60
+
+w = int(439*scale)
+h = int(638*scale)
+
+backgroundImage = Image.open("./Kartengrafiken/Spielkarte_MUSTER_0.png")
+backgroundImage = backgroundImage.resize((w,h), Image.ANTIALIAS)
+background = ImageTk.PhotoImage(backgroundImage)
+
+upImage = Image.open("./Kartengrafiken/Spielkarte_MUSTER_ARROW_UP.png")
+upImage = upImage.resize((w,h), Image.ANTIALIAS)
+up = ImageTk.PhotoImage(upImage)
+
+downImage = Image.open("./Kartengrafiken/Spielkarte_MUSTER_ARROW_Down.png")
+downImage = downImage.resize((w,h), Image.ANTIALIAS)
+down = ImageTk.PhotoImage(downImage)
+
+ablagestapelFrame = Frame(root)
+ablagestapelFrame.pack(side=TOP)
+
+ablageKarte = Frame(ablagestapelFrame)
+ablageKarte.pack(side = LEFT)
+
+canvas1_1 = tk.Canvas(ablageKarte, width=w, height=h)
+canvas1_1.pack(side='top', fill=None, expand=False)
+
+canvas1_1.create_image(0,0, image=up, anchor=NW)
+
+canvas1_1.create_text(w/2, 60*scale, text="99", font="Chiller 42", fill="white", anchor=CENTER) #mitt oben
+canvas1_1.create_text(w/2, h-100*scale, text="1", font="Chiller 125", fill="white", anchor=CENTER) #mitte unten
+
+ablageKarte = Frame(ablagestapelFrame)
+ablageKarte.pack(side = LEFT)
+
+canvas1_2 = tk.Canvas(ablageKarte, width=w, height=h)
+canvas1_2.pack(side='top', fill=None, expand=False)
+
+canvas1_2.create_image(0,0, image=up, anchor=NW)
+
+canvas1_2.create_text(w/2, 60*scale, text="99", font="Chiller 42", fill="white", anchor=CENTER) #mitt oben
+canvas1_2.create_text(w/2, h-100*scale, text="1", font="Chiller 125", fill="white", anchor=CENTER) #mitte unten
+
+ablageKarte = Frame(ablagestapelFrame)
+ablageKarte.pack(side = LEFT)
+
+canvas100_1 = tk.Canvas(ablageKarte, width=w, height=h)
+canvas100_1.pack(side='top', fill=None, expand=False)
+
+canvas100_1.create_image(0,0, image=down, anchor=NW)
+
+canvas100_1.create_text(w/2, 125*scale, text="100", font="Chiller 110", fill="white", anchor=CENTER) #mitt oben
+canvas100_1.create_text(w/2, h-50*scale, text="2", font="Chiller 50", fill="white", anchor=CENTER) #mitte unten
+
+ablageKarte = Frame(ablagestapelFrame)
+ablageKarte.pack(side = LEFT)
+
+canvas100_2 = tk.Canvas(ablageKarte, width=w, height=h)
+canvas100_2.pack(side='top', fill=None, expand=False)
+
+canvas100_2.create_image(0,0, image=down, anchor=NW)
+
+canvas100_2.create_text(w/2, 125*scale, text="100", font="Chiller 110", fill="white", anchor=CENTER) #mitt oben
+canvas100_2.create_text(w/2, h-50*scale, text="2", font="Chiller 50", fill="white", anchor=CENTER) #mitte unten
+
+handkartenFrame = Frame(root)
+handkartenFrame.pack(side=BOTTOM)
+
+# """-----------------------------------BUTTONS---------------------------------------#
+
 topFrame = Frame(root)
 topFrame.pack()
 bottomFrame = Frame(root)
 bottomFrame.pack()
 
-Label1 = Label(topFrame, text="THE GAME")
-Label1.pack()
+title = Label(topFrame, text="THE GAME")
+title.pack()
 
-listHandkarten = []
-Quit = Button(bottomFrame, text="Beenden", command=root.destroy)
-Quit.pack()
+quit = Button(bottomFrame, text="Beenden", command=root.destroy)
+quit.pack()
 
 
 # """-----------------------------------GUI---------------------------------------#
 
 class Spielkarte:
-    def __init__(self, value):
+    def __init__(self, value, handkartenFrame):
         self.value = value
+        self.handkartenFrame = handkartenFrame
+    
+    def generate(self):
+        cardFrame = Frame(self.handkartenFrame)
+        cardFrame.pack(side = LEFT)
+
+        scale = 0.6
+
+        w = 439*scale
+        h = 638*scale
+
+        canvas = tk.Canvas(cardFrame, width=w, height=h)
+        canvas.pack(side='top', fill=None, expand=False)
+
+        canvas.create_image(0,0, image=background, anchor=NW)
+
+        canvas.create_text(30*scale, 20*scale, text=self.value, font="Chiller 42", fill="white", anchor=NW) #links oben
+        canvas.create_text(w-20*scale, 20*scale, text=self.value, font="Chiller 42", fill="white", anchor=NE) #rechts oben
+        canvas.create_text(30*scale, h, text=self.value, font="Chiller 42", fill="white", anchor=SW) #links unten
+        canvas.create_text(w-20*scale, h, text=self.value, font="Chiller 42", fill="white", anchor=SE) #rechts unten
+        canvas.create_text(w/2, h*0.6, text=self.value, font="Chiller 137", fill="white", anchor=CENTER) #mittlere Zahl
 
     def getValue(self):
         return self.value
@@ -131,7 +215,7 @@ class Kartenstapel:
     # print(spK)
 
     for spK0 in spK:
-        spielKarten.append(Spielkarte(spK0))
+        spielKarten.append(Spielkarte(spK0, handkartenFrame))
 
     # spielKarten = [Spielkarte(1), Spielkarte(2), Spielkarte(3), Spielkarte(4), Spielkarte(5)] --ALT--
     random.shuffle(spielKarten)
@@ -168,6 +252,7 @@ listHandkarten = []
 for karte in HandKarten.handKarten:
     #time.sleep(0.5)
     print(karte.getValue())
+    karte.generate()
     listHandkarten.append(karte.getValue())
     print(listHandkarten)
 

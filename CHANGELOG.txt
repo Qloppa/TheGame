@@ -1,5 +1,11 @@
 CHANGELOG:
 
+22-06-20:
+    * Frame für die Ablagestapel
+    * Frame für die Handkarten
+    * Karten in Spielkarte generiert
+    * AblageKarten einzeln generiert
+
 18-06-20:
     * Testbackground
     * Diverse Bildfiles

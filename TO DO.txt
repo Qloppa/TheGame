@@ -1,17 +1,27 @@
 TO DO:
+
     PRIORITÄT {HOCH}:
 
     - GUI
     - Spielfunktionen
-    - Karten "bauen"
 
     
     PRIORITÄT {MITTEL}:
 
     - Struktur Code? (Einteilung, Ordnung, Sauberer Code?)
+<<<<<<< HEAD
     - Tkinter Grid (Anordnung, Aufteilung, INFORMIEREN!)
+=======
+    - Tkinter Grid (Anordnung, Aufteilung, INFORMIEREN!) --> aktuell Frames verwendet mit pack()
+    - AblageKarten als Objekt anlegen
+
+>>>>>>> 41bb572... import packages
     
     PRIORITÄT {Niedrig}:
     
     - Submenu Klickbare strichliste entfernen
+<<<<<<< HEAD
     
+=======
+    
+>>>>>>> 41bb572... import packages
