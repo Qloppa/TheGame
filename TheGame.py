@@ -69,7 +69,7 @@ root.title("THE GAME!")
 root.iconbitmap("THE_GAME_ICON.ico")
 root.geometry("800x800")
 
-image2 = Image.open("./Kartengrafiken/Spielkarte_1.png")
+image2 = Image.open("./Kartengrafiken/Spielkarte_MUSTER_0.png")
 #image2.show()
 image1 = ImageTk.PhotoImage(image2)
 background_label = tk.Label(root, image=image1)
