@@ -8,10 +8,10 @@ TO DO:
     
     PRIORITÄT {MITTEL}:
 
-    - Probleme beim Pushen seit letztem Update
-        ~Weiß nicht wieso? Könnte an der neuen Datei liegen?
     - Struktur Code? (Einteilung, Ordnung, Sauberer Code?)
-
+    - Tkinter Grid (Anordnung, Aufteilung, INFORMIEREN!)
+    
     PRIORITÄT {Niedrig}:
-
-    - ?
+    
+    - Submenu Klickbare strichliste entfernen
+    
