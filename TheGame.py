@@ -8,6 +8,7 @@ from PIL import Image
 TG_Version = "0.0.1"
 Final = False
 
+#testcomment
 
 def loadList(filename):
     # Die Dateiendung sollte .npy sein [Numpy]
