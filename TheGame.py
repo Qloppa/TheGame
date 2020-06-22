@@ -174,8 +174,7 @@ bottomFrame.pack()
 title = Label(topFrame, text="THE GAME")
 title.pack()
 
-quit = Button(bottomFrame, text="Beenden", command=root.destroy)
-quit.pack()
+
 
 
 # """-----------------------------------GUI--------------------------------------#
@@ -211,7 +210,7 @@ class Spielkarte:
 
 class Kartenstapel:
     spielKarten = []
-    spK = np.arange(1, 11, 1).tolist()  # spK = Spielkarten // Erstellt eine Liste der Zahlen 1 - 100
+    spK = np.arange(2, 99, 1).tolist()  # spK = Spielkarten // Erstellt eine Liste der Zahlen 1 - 100
     # print(spK)
 
     for spK0 in spK:
@@ -234,6 +233,10 @@ class HandKarten:
         for x in range(anzahl):
             self.handKarten.append(Kartenstapel.spielKarten.pop())
 
+    def shuffleHandkarten(self, anzahl):
+        for x in range(anzahl):
+            #self.handKarten.append(Kartenstapel.spielKarten.pop())
+            self.handKarten.pop(Kartenstapel.spielKarten.append)
 
 print("The Game:")
 
@@ -258,11 +261,14 @@ for karte in HandKarten.handKarten:
 
 print("Kartenstapel:")
 
-for spielKarte in Kartenstapel.spielKarten:
+"""for spielKarte in Kartenstapel.spielKarten:
     #time.sleep(0.5)
     print(spielKarte.getValue())
 
 print("der Stapel ist leer")
+"""
+shuffle = Button(bottomFrame, text="Mischen", command=HandKarten.shuffleHandkarten(7))
+shuffle.pack()
 
 Label2 = Label(topFrame, text=f"Du hälst jetzt " + str(
     len(listHandkarten)) + " Karten in deiner Hand.\n" + "Es sind die Zahlen: " + str(listHandkarten))
