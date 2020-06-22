@@ -178,7 +178,7 @@ quit = Button(bottomFrame, text="Beenden", command=root.destroy)
 quit.pack()
 
 
-# """-----------------------------------GUI---------------------------------------#
+# """-----------------------------------GUI--------------------------------------#
 
 class Spielkarte:
     def __init__(self, value, handkartenFrame):
