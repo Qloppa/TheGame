@@ -5,6 +5,8 @@ from tkinter import *
 import tkinter as tk
 from PIL import ImageTk
 from PIL import Image
+from cardmechanics import Spielkarte
+
 TG_Version = "0.0.2"
 Final = False
 
@@ -69,6 +71,7 @@ root = Tk()
 root.title("THE GAME!")
 root.iconbitmap("THE_GAME_ICON.ico")
 root.geometry("1920x1080")
+root.attributes('-fullscreen', False)
 
 # """-----------------------------------MENU---------------------------------------#
 
@@ -83,22 +86,22 @@ def aboutTG():
     Label1.pack()
 
 menu = Menu(root)
-subMenu = Menu(menu)
+subMenu = Menu(menu, tearoff=0)
 root.config(menu=menu)
 
 menu.add_cascade(label="Spiel", menu=subMenu)
-subMenu.add_command(label="Neues Spiel", command=doNothing)
+subMenu.add_command(label="Neue Karten", command=HandKarten.nimmHandKarten(7))
 subMenu.add_command(label='Über The Game', command=aboutTG)
 subMenu.add_separator()
 subMenu.add_command(label="Beenden", command=root.destroy)
 
-editMenu = Menu(menu)
+editMenu = Menu(menu, tearoff=0)
 menu.add_cascade(label="Einstellungen", menu=editMenu)
 editMenu.add_command(label="1337", command=doNothing)
 
 # """-----------------------------------IMAGE---------------------------------------#
-scale = 0.60
 
+scale = 0.60
 w = int(439*scale)
 h = int(638*scale)
 
@@ -174,69 +177,12 @@ bottomFrame.pack()
 title = Label(topFrame, text="THE GAME")
 title.pack()
 
+quit = Button(bottomFrame, text="Beenden", command=root.destroy)
+quit.pack()
 
 
+# """-----------------------------------GUI---------------------------------------#
 
-# """-----------------------------------GUI--------------------------------------#
-
-class Spielkarte:
-    def __init__(self, value, handkartenFrame):
-        self.value = value
-        self.handkartenFrame = handkartenFrame
-    
-    def generate(self):
-        cardFrame = Frame(self.handkartenFrame)
-        cardFrame.pack(side = LEFT)
-
-        scale = 0.6
-
-        w = 439*scale
-        h = 638*scale
-
-        canvas = tk.Canvas(cardFrame, width=w, height=h)
-        canvas.pack(side='top', fill=None, expand=False)
-
-        canvas.create_image(0,0, image=background, anchor=NW)
-
-        canvas.create_text(30*scale, 20*scale, text=self.value, font="Chiller 42", fill="white", anchor=NW) #links oben
-        canvas.create_text(w-20*scale, 20*scale, text=self.value, font="Chiller 42", fill="white", anchor=NE) #rechts oben
-        canvas.create_text(30*scale, h, text=self.value, font="Chiller 42", fill="white", anchor=SW) #links unten
-        canvas.create_text(w-20*scale, h, text=self.value, font="Chiller 42", fill="white", anchor=SE) #rechts unten
-        canvas.create_text(w/2, h*0.6, text=self.value, font="Chiller 137", fill="white", anchor=CENTER) #mittlere Zahl
-
-    def getValue(self):
-        return self.value
-
-
-class Kartenstapel:
-    spielKarten = []
-    spK = np.arange(2, 99, 1).tolist()  # spK = Spielkarten // Erstellt eine Liste der Zahlen 1 - 100
-    # print(spK)
-
-    for spK0 in spK:
-        spielKarten.append(Spielkarte(spK0, handkartenFrame))
-
-    # spielKarten = [Spielkarte(1), Spielkarte(2), Spielkarte(3), Spielkarte(4), Spielkarte(5)] --ALT--
-    random.shuffle(spielKarten)
-
-    def __init__(self):
-        print("Kartenstapel initialisiert")
-
-
-class HandKarten:
-    handKarten = []
-
-    def __init__(self):
-        print("HandKarten initialisiert")
-
-    def nimmHandKarten(self, anzahl):
-        for x in range(anzahl):
-            self.handKarten.append(Kartenstapel.spielKarten.pop())
-
-    def shuffleHandkarten(self, anzahl):
-        for x in range(anzahl):
-            #self.handKarten.append(Kartenstapel.spielKarten.pop())
-            self.handKarten.pop(Kartenstapel.spielKarten.append)
 
 print("The Game:")
 
@@ -261,14 +207,11 @@ for karte in HandKarten.handKarten:
 
 print("Kartenstapel:")
 
-"""for spielKarte in Kartenstapel.spielKarten:
+for spielKarte in Kartenstapel.spielKarten:
     #time.sleep(0.5)
     print(spielKarte.getValue())
 
 print("der Stapel ist leer")
-"""
-shuffle = Button(bottomFrame, text="Mischen", command=HandKarten.shuffleHandkarten(7))
-shuffle.pack()
 
 Label2 = Label(topFrame, text=f"Du hälst jetzt " + str(
     len(listHandkarten)) + " Karten in deiner Hand.\n" + "Es sind die Zahlen: " + str(listHandkarten))
