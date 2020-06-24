@@ -5,7 +5,7 @@ from tkinter import *
 import tkinter as tk
 from PIL import ImageTk
 from PIL import Image
-from cardmechanics import Spielkarte
+from cardmechanics import nimmHandKarten
 
 TG_Version = "0.0.2"
 Final = False
@@ -90,7 +90,7 @@ subMenu = Menu(menu, tearoff=0)
 root.config(menu=menu)
 
 menu.add_cascade(label="Spiel", menu=subMenu)
-subMenu.add_command(label="Neue Karten", command=HandKarten.nimmHandKarten(7))
+subMenu.add_command(label="Neue Karten", command=doNothing)
 subMenu.add_command(label='Über The Game', command=aboutTG)
 subMenu.add_separator()
 subMenu.add_command(label="Beenden", command=root.destroy)
@@ -105,7 +105,7 @@ scale = 0.60
 w = int(439*scale)
 h = int(638*scale)
 
-backgroundImage = Image.open("./Kartengrafiken/Spielkarte_MUSTER_0.png")
+backgroundImage = Image.open("./Kartengrafiken/Spielkarte_MUSTER_0_unicorn.png") # ohne unicorn
 backgroundImage = backgroundImage.resize((w,h), Image.ANTIALIAS)
 background = ImageTk.PhotoImage(backgroundImage)
 
@@ -182,7 +182,63 @@ quit.pack()
 
 
 # """-----------------------------------GUI---------------------------------------#
+class Spielkarte:
+    def __init__(self, value, handkartenFrame):
+        self.value = value
+        self.handkartenFrame = handkartenFrame
 
+    def generate(self):
+        cardFrame = Frame(self.handkartenFrame)
+        cardFrame.pack(side=LEFT)
+
+        scale = 0.6
+
+        w = 439 * scale
+        h = 638 * scale
+
+        canvas = tk.Canvas(cardFrame, width=w, height=h)
+        canvas.pack(side='top', fill=None, expand=False)
+
+        canvas.create_image(0, 0, image=background, anchor=NW)
+                                                                                                            #Alter Font Chiller
+        canvas.create_text(30 * scale, 20 * scale, text=self.value, font="Castellar 42", fill="black",
+                           anchor=NW)  # links oben
+        canvas.create_text(w - 20 * scale, 20 * scale, text=self.value, font="Castellar 42", fill="black",
+                           anchor=NE)  # rechts oben
+        canvas.create_text(30 * scale, h, text=self.value, font="Castellar 42", fill="black", anchor=SW)  # links unten
+        canvas.create_text(w - 20 * scale, h, text=self.value, font="Castellar 42", fill="black",
+                           anchor=SE)  # rechts unten
+        canvas.create_text(w / 2, h * 0.6, text=self.value, font="Castellar 137", fill="black",
+                           anchor=CENTER)  # mittlere Zahl
+
+    def getValue(self):
+        return self.value
+
+
+class Kartenstapel:
+    spielKarten = []
+    spK = np.arange(1, 100, 1).tolist()  # spK = Spielkarten // Erstellt eine Liste der Zahlen 1 - 100
+    # print(spK)
+
+    for spK0 in spK:
+        spielKarten.append(Spielkarte(spK0, handkartenFrame))
+
+    # spielKarten = [Spielkarte(1), Spielkarte(2), Spielkarte(3), Spielkarte(4), Spielkarte(5)] --ALT--
+    random.shuffle(spielKarten)
+
+    def __init__(self):
+        print("Kartenstapel initialisiert")
+
+
+class HandKarten:
+    handKarten = []
+
+    def __init__(self):
+        print("HandKarten initialisiert")
+
+    def nimmHandKarten(self, anzahl):
+        for x in range(anzahl):
+            self.handKarten.append(Kartenstapel.spielKarten.pop())
 
 print("The Game:")
 
