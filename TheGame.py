@@ -128,7 +128,7 @@ canvas1_1.pack(side='top', fill=None, expand=False)
 
 canvas1_1.create_image(0,0, image=up, anchor=NW)
 
-canvas1_1.create_text(w/2, 60*scale, text="99", font="Chiller 42", fill="white", anchor=CENTER) #mitt oben
+canvas1_1.create_text(w/2, 60*scale, text="99", font=f"Chiller 42", fill="white", anchor=CENTER) #mitt oben
 canvas1_1.create_text(w/2, h-100*scale, text="1", font="Chiller 125", fill="white", anchor=CENTER) #mitte unten
 
 ablageKarte = Frame(ablagestapelFrame)
@@ -191,8 +191,13 @@ class Spielkarte:
         cardFrame = Frame(self.handkartenFrame)
         cardFrame.pack(side=LEFT)
 
+        #Scaling für die Zahlen und die Gesamte Karte
         scale = 0.6
-
+        fontsizecorner = 42
+        fontsizemiddle = 137
+        font = "Castellar"
+        actualfontcorner = f"" + font + " " + str(int(fontsizecorner*scale))
+        actualfontmiddle = f"" + font + " " + str(int(fontsizemiddle * scale))
         w = 439 * scale
         h = 638 * scale
 
@@ -201,14 +206,14 @@ class Spielkarte:
 
         canvas.create_image(0, 0, image=background, anchor=NW)
                                                                                                             #Alter Font Chiller
-        canvas.create_text(30 * scale, 20 * scale, text=self.value, font="Castellar 42", fill="black",
+        canvas.create_text(30 * scale, 20 * scale, text=self.value, font=actualfontcorner, fill="black",
                            anchor=NW)  # links oben
-        canvas.create_text(w - 20 * scale, 20 * scale, text=self.value, font="Castellar 42", fill="black",
+        canvas.create_text(w - 20 * scale, 20 * scale, text=self.value, font=actualfontcorner, fill="black",
                            anchor=NE)  # rechts oben
-        canvas.create_text(30 * scale, h, text=self.value, font="Castellar 42", fill="black", anchor=SW)  # links unten
-        canvas.create_text(w - 20 * scale, h, text=self.value, font="Castellar 42", fill="black",
+        canvas.create_text(30 * scale, h, text=self.value, font=actualfontcorner, fill="black", anchor=SW)  # links unten
+        canvas.create_text(w - 20 * scale, h, text=self.value, font=actualfontcorner, fill="black",
                            anchor=SE)  # rechts unten
-        canvas.create_text(w / 2, h * 0.6, text=self.value, font="Castellar 137", fill="black",
+        canvas.create_text(w / 2, h * 0.6, text=self.value, font=actualfontmiddle, fill="black",
                            anchor=CENTER)  # mittlere Zahl
 
     def getValue(self):
