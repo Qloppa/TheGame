@@ -1,17 +1,18 @@
-import time
 import random
 import numpy as np
 from tkinter import *
 import tkinter as tk
 from PIL import ImageTk
 from PIL import Image
-from cardmechanics import nimmHandKarten
 from VersionControl import VersionControl
+from Model import Kartenstapel, Handkarten, Spielkarte, Spieler
 
-TG_Version = "0.0.2"
+TG_Version = "0.0.3"
 Final = False
 VC = VersionControl(TG_Version)
-#testcomment
+_GAME_ICON = "resources/THE_GAME_ICON.ico"
+
+stapelGroesse = 99
 
 if Final == False: #DEAKTIVIERT DAS ZÄHLEN DER REVISIONEN IM FINALEN BUILD
     VC.getRev()
@@ -39,7 +40,7 @@ UM DAS GUI RAUSZUNEHMEN EINFACH RAUTEN AM ANFANG DER ZEILE ENTFERNEN!
 # """-----------------------------------GUI---------------------------------------#
 root = Tk()
 root.title("THE GAME!")
-root.iconbitmap("THE_GAME_ICON.ico")
+root.iconbitmap(_GAME_ICON)
 root.geometry("1920x1080")
 root.attributes('-fullscreen', False)
 
@@ -48,7 +49,7 @@ root.attributes('-fullscreen', False)
 def aboutTG():
     newWindow = Toplevel(root)
     newWindow.title("Über The Game")
-    newWindow.iconbitmap("THE_GAME_ICON.ico")
+    newWindow.iconbitmap(_GAME_ICON)
     newWindow.geometry("250x60")
     Label1 = Label(newWindow, text=f"The Game\n" +
                    "by Qloppa & Balboran\n" +
@@ -75,15 +76,15 @@ scale = 0.60
 w = int(439*scale)
 h = int(638*scale)
 
-backgroundImage = Image.open("./Kartengrafiken/Spielkarte_MUSTER_0_unicorn.png") # ohne unicorn
+backgroundImage = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_0_unicorn.png") # ohne unicorn
 backgroundImage = backgroundImage.resize((w,h), Image.ANTIALIAS)
 background = ImageTk.PhotoImage(backgroundImage)
 
-upImage = Image.open("./Kartengrafiken/Spielkarte_MUSTER_ARROW_UP.png")
+upImage = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_ARROW_UP.png")
 upImage = upImage.resize((w,h), Image.ANTIALIAS)
 up = ImageTk.PhotoImage(upImage)
 
-downImage = Image.open("./Kartengrafiken/Spielkarte_MUSTER_ARROW_Down.png")
+downImage = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_ARROW_Down.png")
 downImage = downImage.resize((w,h), Image.ANTIALIAS)
 down = ImageTk.PhotoImage(downImage)
 
@@ -137,6 +138,36 @@ canvas100_2.create_text(w/2, h-50*scale, text="2", font="Chiller 50", fill="whit
 handkartenFrame = Frame(root)
 handkartenFrame.pack(side=BOTTOM)
 
+def generate(spielKarte):
+        cardFrame = Frame(handkartenFrame)
+        cardFrame.pack(side=LEFT)
+
+        #Scaling für die Zahlen und die Gesamte Karte
+        scale = 0.6
+        fontsizecorner = 42
+        fontsizemiddle = 137
+        font = "Castellar"
+        #Alter Font Chiller
+        actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
+        actualfontmiddle = f"{font} {str(int(fontsizemiddle * scale))}"
+        w = 439 * scale
+        h = 638 * scale
+
+        canvas = tk.Canvas(cardFrame, width=w, height=h)
+        canvas.pack(side='top', fill=None, expand=False)
+
+        canvas.create_image(0, 0, image=background, anchor=NW)
+                                                                                                            
+        canvas.create_text(30 * scale, 20 * scale, text=spielKarte.value, font=actualfontcorner, fill="black",
+                           anchor=NW)  # links oben
+        canvas.create_text(w - 20 * scale, 20 * scale, text=spielKarte.value, font=actualfontcorner, fill="black",
+                           anchor=NE)  # rechts oben
+        canvas.create_text(30 * scale, h, text=spielKarte.value, font=actualfontcorner, fill="black", anchor=SW)  # links unten
+        canvas.create_text(w - 20 * scale, h, text=spielKarte.value, font=actualfontcorner, fill="black",
+                           anchor=SE)  # rechts unten
+        canvas.create_text(w / 2, h * 0.6, text=spielKarte.value, font=actualfontmiddle, fill="black",
+                           anchor=CENTER)  # mittlere Zahl
+
 # """-----------------------------------BUTTONS---------------------------------------#
 
 topFrame = Frame(root)
@@ -150,99 +181,33 @@ title.pack()
 quit = Button(bottomFrame, text="Beenden", command=root.destroy)
 quit.pack()
 
-
 # """-----------------------------------GUI---------------------------------------#
-
-class Spielkarte:
-    def __init__(self, value, handkartenFrame):
-        self.value = value
-        self.handkartenFrame = handkartenFrame
-
-    def generate(self):
-        cardFrame = Frame(self.handkartenFrame)
-        cardFrame.pack(side=LEFT)
-
-        #Scaling für die Zahlen und die Gesamte Karte
-        scale = 0.6
-        fontsizecorner = 42
-        fontsizemiddle = 137
-        font = "Castellar"
-        #Alter Font Chiller
-        actualfontcorner = f"" + font + " " + str(int(fontsizecorner*scale))
-        actualfontmiddle = f"" + font + " " + str(int(fontsizemiddle * scale))
-        w = 439 * scale
-        h = 638 * scale
-
-        canvas = tk.Canvas(cardFrame, width=w, height=h)
-        canvas.pack(side='top', fill=None, expand=False)
-
-        canvas.create_image(0, 0, image=background, anchor=NW)
-                                                                                                            
-        canvas.create_text(30 * scale, 20 * scale, text=self.value, font=actualfontcorner, fill="black",
-                           anchor=NW)  # links oben
-        canvas.create_text(w - 20 * scale, 20 * scale, text=self.value, font=actualfontcorner, fill="black",
-                           anchor=NE)  # rechts oben
-        canvas.create_text(30 * scale, h, text=self.value, font=actualfontcorner, fill="black", anchor=SW)  # links unten
-        canvas.create_text(w - 20 * scale, h, text=self.value, font=actualfontcorner, fill="black",
-                           anchor=SE)  # rechts unten
-        canvas.create_text(w / 2, h * 0.6, text=self.value, font=actualfontmiddle, fill="black",
-                           anchor=CENTER)  # mittlere Zahl
-
-    def getValue(self):
-        return self.value
-
-class Kartenstapel:
-    spielKarten = []
-    spK = np.arange(2, 99, 1).tolist()  # spK = Spielkarten // Erstellt eine Liste der Zahlen 1 - 100
-    # print(spK)
-
-    for spK0 in spK:
-        spielKarten.append(Spielkarte(spK0, handkartenFrame))
-
-    # spielKarten = [Spielkarte(1), Spielkarte(2), Spielkarte(3), Spielkarte(4), Spielkarte(5)] --ALT--
-    random.shuffle(spielKarten)
-
-class HK:
-    handKarten = []
-
-    def __init__(self):
-        print("HandKarten initialisiert")
-
-    def nimmHandKarten(self, anzahl):
-        for x in range(anzahl):
-            self.handKarten.append(Kartenstapel.spielKarten.pop())
 
 print("The Game:")
 
-print("Kartenstapel:")
+spielerListe = []
 
-for spielKarte in Kartenstapel.spielKarten:
-    #time.sleep(0.5)
-    print(spielKarte.getValue())
-
-print("Handkarten:")
-
-HandKarten = HK()
-HandKarten.nimmHandKarten(7)
-listHandkarten = []
-
-for karte in HandKarten.handKarten:
-    #time.sleep(0.5)
-    print(karte.getValue())
-    karte.generate()
-    listHandkarten.append(karte.getValue())
-    print(listHandkarten)
+spieler1 = Spieler("Felix")
+spielerListe.append(spieler1)
 
 print("Kartenstapel:")
 
-for spielKarte in Kartenstapel.spielKarten:
-    #time.sleep(0.5)
-    print(spielKarte.getValue())
+KS = Kartenstapel(stapelGroesse)
+print(list(map(lambda x: x.getValue(), KS.spielKarten)))
 
-print("der Stapel ist leer")
+print(f"Handkarten von {spieler1.name}:")
+spieler1.zieheHandKarten(7, KS)
 
-Label2 = Label(topFrame, text=f"Du hälst jetzt " + str(
-    len(listHandkarten)) + " Karten in deiner Hand.\n" + "Es sind die Zahlen: " + str(listHandkarten))
-Label2.pack()
+for karte in spieler1.handKarten.handKarten:
+    generate(karte)
+print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
+
+print("Kartenstapel:")
+
+print(list(map(lambda x: x.getValue(), KS.spielKarten)))
+
+textLabel = Label(topFrame, text=f"Du hälst jetzt " + str(
+    len(spieler1.handKarten.handKarten)) + " Karten in deiner Hand.\n" + "Es sind die Zahlen: " + str(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten))))
+textLabel.pack()
 
 root.mainloop()
