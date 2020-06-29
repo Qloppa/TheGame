@@ -6,50 +6,20 @@ import tkinter as tk
 from PIL import ImageTk
 from PIL import Image
 from cardmechanics import nimmHandKarten
+from VersionControl import VersionControl
 
 TG_Version = "0.0.2"
 Final = False
-
+VC = VersionControl(TG_Version)
 #testcomment
 
-def loadList(filename):
-    # Die Dateiendung sollte .npy sein [Numpy]
-    tempNumpyArray=np.load(filename)
-    return tempNumpyArray.tolist()
-
-def safeList(myList, filename):
-    np.save(filename, myList)
-
 if Final == False: #DEAKTIVIERT DAS ZÄHLEN DER REVISIONEN IM FINALEN BUILD
-    def getRev():
-        rev_old = loadList("rev_old_file.npy")  # Lädt die alte Revisionsnummer
-        e = int(rev_old[0])
-        c = e + 1
-        rev_new = str(c)
-        rev_old = [rev_new]
-        print(f"Version " + TG_Version + "(Rev." + rev_new + ")")
-        safeList(rev_old, "rev_old_file") #Speichert die Revisionsnummer
+    VC.getRev()
 else:
-    rev_old = loadList("rev_old_file.npy")  # Lädt die alte Revisionsnummer
-    e = int(rev_old[0])
-    c = e
-    rev_new = str(c)
-    rev_old = [rev_new]
-    if Final == True:
-        TG_Version = "(Release): " + TG_Version
-    def getRev():
-        pass
-    print(f"Version " + TG_Version + "(Rev." + rev_new + ")")
-
-
-def useRev():
-    rev_old = loadList("rev_old_file.npy")   # Lädt die alte Revisionsnummer
-    return rev_old[0]
+    VC.releaseRev()
 
 def doNothing():
     print("OK, I do Nothing")
-
-getRev() # Ersetzt die alte gegen die neue Revisionsnummer und gibt diese aus.
 
 """ - GUI Section -
 
@@ -82,7 +52,7 @@ def aboutTG():
     newWindow.geometry("250x60")
     Label1 = Label(newWindow, text=f"The Game\n" +
                    "by Qloppa & Balboran\n" +
-                   "Ver. " + TG_Version + "." + str(useRev()))
+                   "Ver. " + TG_Version + "." + str(VC.useRev()))
     Label1.pack()
 
 menu = Menu(root)
