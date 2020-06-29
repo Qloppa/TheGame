@@ -182,6 +182,7 @@ quit.pack()
 
 
 # """-----------------------------------GUI---------------------------------------#
+
 class Spielkarte:
     def __init__(self, value, handkartenFrame):
         self.value = value
@@ -196,6 +197,7 @@ class Spielkarte:
         fontsizecorner = 42
         fontsizemiddle = 137
         font = "Castellar"
+        #Alter Font Chiller
         actualfontcorner = f"" + font + " " + str(int(fontsizecorner*scale))
         actualfontmiddle = f"" + font + " " + str(int(fontsizemiddle * scale))
         w = 439 * scale
@@ -205,7 +207,7 @@ class Spielkarte:
         canvas.pack(side='top', fill=None, expand=False)
 
         canvas.create_image(0, 0, image=background, anchor=NW)
-                                                                                                            #Alter Font Chiller
+                                                                                                            
         canvas.create_text(30 * scale, 20 * scale, text=self.value, font=actualfontcorner, fill="black",
                            anchor=NW)  # links oben
         canvas.create_text(w - 20 * scale, 20 * scale, text=self.value, font=actualfontcorner, fill="black",
@@ -219,10 +221,9 @@ class Spielkarte:
     def getValue(self):
         return self.value
 
-
 class Kartenstapel:
     spielKarten = []
-    spK = np.arange(1, 100, 1).tolist()  # spK = Spielkarten // Erstellt eine Liste der Zahlen 1 - 100
+    spK = np.arange(2, 99, 1).tolist()  # spK = Spielkarten // Erstellt eine Liste der Zahlen 1 - 100
     # print(spK)
 
     for spK0 in spK:
@@ -231,11 +232,7 @@ class Kartenstapel:
     # spielKarten = [Spielkarte(1), Spielkarte(2), Spielkarte(3), Spielkarte(4), Spielkarte(5)] --ALT--
     random.shuffle(spielKarten)
 
-    def __init__(self):
-        print("Kartenstapel initialisiert")
-
-
-class HandKarten:
+class HK:
     handKarten = []
 
     def __init__(self):
@@ -255,7 +252,7 @@ for spielKarte in Kartenstapel.spielKarten:
 
 print("Handkarten:")
 
-HandKarten = HandKarten()
+HandKarten = HK()
 HandKarten.nimmHandKarten(7)
 listHandkarten = []
 
