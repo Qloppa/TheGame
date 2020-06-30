@@ -18,8 +18,8 @@ else:
 
 # """-----------------------------------GUI---------------------------------------#
 
+View.init(TG_Version, VC.useRev())
 root = View.createWindow()
-#View.aboutTG(TG_Version, str(VC.useRev))
 View.createImage()
 View.createButtons()
 

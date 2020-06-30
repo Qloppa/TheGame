@@ -5,7 +5,7 @@ class VersionControl:
 
     def __init__(self, TG_Version):
         self.TG_Version=TG_Version
-
+        
     def loadList(self, filename):
         # Die Dateiendung sollte .npy sein [Numpy]
         tempNumpyArray=np.load(filename)

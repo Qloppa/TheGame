@@ -10,6 +10,14 @@ handkartenFrame = None
 background = None
 up = None
 down = None
+TG_Version = None
+rev = None
+
+def init(version, revNumber):
+    global TG_Version
+    TG_Version = version
+    global rev
+    rev = revNumber
 
 def createWindow():
     global root
@@ -17,7 +25,7 @@ def createWindow():
     root.title("THE GAME!")
     root.iconbitmap(_GAME_ICON)
     root.geometry("1920x1080")
-    root.attributes('-fullscreen', True)
+    root.attributes('-fullscreen', False)
     createMenu()
     return root
 
@@ -25,15 +33,15 @@ def createWindow():
 def doNothing():
     print("OK, I do Nothing")
 
-def aboutTG(TG_Version, rev):
+def aboutTG():
     newWindow = Toplevel(root)
     newWindow.title("Über The Game")
     newWindow.iconbitmap(_GAME_ICON)
     newWindow.geometry("250x60")
-    Label1 = Label(newWindow, text=f"The Game\n" +
+    aboutLabel = Label(newWindow, text=f"The Game\n" +
                    "by Qloppa & Balboran\n" +
                    "Ver. " + TG_Version + "." + rev)
-    Label1.pack()
+    aboutLabel.pack()
 
 def createMenu():
     menu = Menu(root)
