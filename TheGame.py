@@ -3,10 +3,6 @@ import numpy as np
 from VersionControl import VersionControl
 from Model import Kartenstapel, Handkarten, Spielkarte, Spieler
 import View
-from tkinter import *
-import tkinter as tk
-from PIL import ImageTk
-from PIL import Image
 
 TG_Version = "0.0.4"
 Final = False
