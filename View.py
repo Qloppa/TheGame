@@ -130,38 +130,46 @@ def createImage():
     handkartenFrame = Frame(root)
     handkartenFrame.pack(side=BOTTOM)
 
-def generate(spielKarte):
+def deleteHandkarten():
+    # destroy all widgets from frame
+    for widget in handkartenFrame.winfo_children():
+       widget.destroy()
+    # this will clear frame and frame will be empty
+    #handkartenFrame.pack(side=BOTTOM)
 
-        cardFrame = Frame(handkartenFrame)
-        cardFrame.pack(side=LEFT)
+def karteAnzeigen(spielKarte):
 
-        #Scaling für die Zahlen und die Gesamte Karte
-        scale = 0.6
-        fontsizecorner = 42
-        fontsizemiddle = 137
-        font = "Castellar"
-        #Alter Font Chiller
-        actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
-        actualfontmiddle = f"{font} {str(int(fontsizemiddle * scale))}"
-        w = 439 * scale
-        h = 638 * scale
+    cardFrame = Frame(handkartenFrame)
+    cardFrame.pack(side=LEFT)
 
-        canvas = tk.Canvas(cardFrame, width=w, height=h)
-        canvas.pack(side='top', fill=None, expand=False)
+    #Scaling für die Zahlen und die Gesamte Karte
+    scale = 0.6
+    fontsizecorner = 42
+    fontsizemiddle = 137
+    font = "Castellar"
+    #Alter Font Chiller
+    actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
+    actualfontmiddle = f"{font} {str(int(fontsizemiddle * scale))}"
+    w = 439 * scale
+    h = 638 * scale
 
-        canvas.create_image(0, 0, image=background, anchor=NW)
-                                                                                                            
-        canvas.create_text(30 * scale, 20 * scale, text=spielKarte.value, font=actualfontcorner, fill="black",
-                           anchor=NW)  # links oben
-        canvas.create_text(w - 20 * scale, 20 * scale, text=spielKarte.value, font=actualfontcorner, fill="black",
-                           anchor=NE)  # rechts oben
-        canvas.create_text(30 * scale, h, text=spielKarte.value, font=actualfontcorner, fill="black", anchor=SW)  # links unten
-        canvas.create_text(w - 20 * scale, h, text=spielKarte.value, font=actualfontcorner, fill="black",
-                           anchor=SE)  # rechts unten
-        canvas.create_text(w / 2, h * 0.6, text=spielKarte.value, font=actualfontmiddle, fill="black",
-                           anchor=CENTER)  # mittlere Zahl
+    canvas = tk.Canvas(cardFrame, width=w, height=h)
+    canvas.pack(side='top', fill=None, expand=False)
+
+    canvas.create_image(0, 0, image=background, anchor=NW)
+                                                                                                        
+    canvas.create_text(30 * scale, 20 * scale, text=spielKarte.value, font=actualfontcorner, fill="black",
+                        anchor=NW)  # links oben
+    canvas.create_text(w - 20 * scale, 20 * scale, text=spielKarte.value, font=actualfontcorner, fill="black",
+                        anchor=NE)  # rechts oben
+    canvas.create_text(30 * scale, h, text=spielKarte.value, font=actualfontcorner, fill="black", anchor=SW)  # links unten
+    canvas.create_text(w - 20 * scale, h, text=spielKarte.value, font=actualfontcorner, fill="black",
+                        anchor=SE)  # rechts unten
+    canvas.create_text(w / 2, h * 0.6, text=spielKarte.value, font=actualfontmiddle, fill="black",
+                        anchor=CENTER)  # mittlere Zahl
 
 # """-----------------------------------BUTTONS---------------------------------------#
+
 
 def createButtons():
     topFrame = Frame(root)

@@ -40,8 +40,22 @@ print(list(map(lambda x: x.getValue(), KS.spielKarten)))
 print(f"Handkarten von {spieler1.name}:")
 spieler1.zieheHandKarten(7, KS)
 
+kartenanzeige = []
+
 for karte in spieler1.handKarten.handKarten:
-    View.generate(karte)
+    kartenanzeige.append(View.karteAnzeigen(karte))
+
+print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
+
+ablegeKarte = input("welche Karte willst du spielen? ")
+
+spieler1.karteAblegen(int(ablegeKarte))
+
+View.deleteHandkarten()
+
+for karte in spieler1.handKarten.handKarten:
+    kartenanzeige.append(View.karteAnzeigen(karte))
+
 print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
 
 print("Kartenstapel:")
