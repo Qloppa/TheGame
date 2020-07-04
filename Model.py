@@ -51,7 +51,9 @@ class Spieler:
             self.handKarten.handKarten.append(kartenstapel.spielKarten.pop())
 
     def karteAblegen(self, nummer):
-        for spielKarte in self.handKarten.handKarten:
-            if spielKarte.getValue()==nummer:
-                self.handKarten.handKarten.remove(spielKarte)
-    
+            for spielKarte in self.handKarten.handKarten:
+                while n == False:
+                    if spielKarte.getValue()==nummer:
+                        self.handKarten.handKarten.remove(spielKarte)
+                    else:
+                        n

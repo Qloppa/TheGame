@@ -3,6 +3,7 @@ import tkinter as tk
 from PIL import ImageTk
 from PIL import Image
 
+
 _GAME_ICON = "resources/THE_GAME_ICON.ico"
 
 root = None
@@ -15,6 +16,7 @@ TG_Version = None
 rev = None
 auswahlKarte = None
 ablagestapelFrame = None
+
 
 def init(version, revNumber):
     global TG_Version
