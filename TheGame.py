@@ -35,12 +35,16 @@ View.init(TG_Version, VC.useRev())
 
 def buttonPressed(event):
     print("karte geklickt")
-    spieler1.karteAblegen(View.getClickedValue())
-    print(f"value: {View.getClickedValue()}")
-    View.deleteHandkarten()
-
-    for karte in spieler1.handKarten.handKarten:
-        View.karteAnzeigen(karte)
+    value = View.getClickedValue()
+    if value > 0:
+        spieler1.karteAblegen(value)
+        print(f"value: {value}")
+        View.deleteHandkarten()
+        View.setClickedValue(0)
+        for karte in spieler1.handKarten.handKarten:
+            View.karteAnzeigen(karte)
+    if value == -4:
+        print("hat geklappt")
 
 root = View.createWindow()
 root.bind("<Button-1>", buttonPressed)

@@ -14,6 +14,7 @@ platzhalter = None
 TG_Version = None
 rev = None
 auswahlKarte = None
+ablagestapelFrame = None
 
 def init(version, revNumber):
     global TG_Version
@@ -89,43 +90,28 @@ def createImage():
     ablagestapelVorlageFrame = Frame(root)
     ablagestapelVorlageFrame.pack(side=TOP)
 
+    global ablagestapelFrame
     ablagestapelFrame = Frame(root)
     ablagestapelFrame.pack(side=TOP)
-
-    ablageKarte = Frame(ablagestapelFrame)
-    ablageKarte.pack(side = LEFT)
-
-    erzeugeAblageKarte(ablageKarte, scale, h, w, platzhalter)
-
-    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
-    ablageKarteVorlage.pack(side = LEFT)
-
-    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, up, "1", "99").config(cursor="exchange")
-
-    ablageKarte = Frame(ablagestapelFrame)
-    ablageKarte.pack(side = LEFT)
-
-    erzeugeAblageKarte(ablageKarte, scale, h, w, platzhalter)
-
-    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
-    ablageKarteVorlage.pack(side = LEFT)
-
-    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, up, "1", "99").config(cursor="exchange")
     
-    ablageKarte = Frame(ablagestapelFrame)
-    ablageKarte.pack(side = LEFT)
+    ablagekartenAnzahl = 4
 
-    erzeugeAblageKarte(ablageKarte, scale, h, w, platzhalter)
+    erzeugeAblageStapel(scale, h, w, platzhalter, ablagekartenAnzahl)
+
+    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
+    ablageKarteVorlage.pack(side = LEFT)
+
+    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, up, "1", "99").config(cursor="exchange")
+
+    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
+    ablageKarteVorlage.pack(side = LEFT)
+
+    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, up, "1", "99").config(cursor="exchange")
 
     ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
     ablageKarteVorlage.pack(side = LEFT)
 
     erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, down, "100", "2").config(cursor="exchange")
-
-    ablageKarte = Frame(ablagestapelFrame)
-    ablageKarte.pack(side = LEFT)
-
-    erzeugeAblageKarte(ablageKarte, scale, h, w, platzhalter)
 
     ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
     ablageKarteVorlage.pack(side = LEFT)
@@ -146,21 +132,36 @@ def erzeugeAblageStapelVorlage(frame, scale, h, w, img, bigNumber, smallNumber):
     canvas.create_text(w/2, h-100*scale, text=bigNumber, font="Chiller 110", fill="white", anchor=CENTER) #mitte unten
     return canvas
 
-def erzeugeAblageKarte(frame, scale, h, w, img):
+def erzeugeAblageKarte(frame, scale, h, w, img, index):
     canvas = tk.Canvas(frame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
     canvas.create_image(0,0, image=img, anchor=NW)
+
+    def stapelGewaehlt(event):
+        global auswahlKarte
+        auswahlKarte = index-4
+
+    canvas.bind("<Button-1>", stapelGewaehlt)
+
     return canvas
 
-def erzeugeAblageStapel():
-    print("moin")
+def erzeugeAblageStapel(scale, h, w, platzhalter, anzahl):
+    for i in range(anzahl):
+        ablageKarte = Frame(ablagestapelFrame)
+        ablageKarte.pack(side = LEFT)
+        erzeugeAblageKarte(ablageKarte, scale, h, w, platzhalter, i)
 
 def deleteHandkarten():
     # destroy all widgets from frame
     for widget in handkartenFrame.winfo_children():
        widget.destroy()
     # this will clear frame and frame will be empty
+
+def deleteAblagestapel():
+    for widget in ablagestapelFrame.winfo_children():
+       widget.destroy()
+    print("Test")
 
 def getClickedValue():
     if auswahlKarte != None:
@@ -169,8 +170,11 @@ def getClickedValue():
         auswahl = 0
     return auswahl
 
-def karteAnzeigen(spielKarte):
+def setClickedValue(value):
+    global auswahlKarte
+    auswahlKarte = value
 
+def karteAnzeigen(spielKarte):
     cardFrame = Frame(handkartenFrame)
     cardFrame.pack(side=LEFT)
 
