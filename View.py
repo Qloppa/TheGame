@@ -85,50 +85,36 @@ def createImage():
     ablageKarte = Frame(ablagestapelFrame)
     ablageKarte.pack(side = LEFT)
 
-    canvas1_1 = tk.Canvas(ablageKarte, width=w, height=h)
-    canvas1_1.pack(side='top', fill=None, expand=False)
+    erzeugeAblageStapel(ablageKarte, scale, h, w, up, "1", "99").config(cursor="exchange")
 
-    canvas1_1.create_image(0,0, image=up, anchor=NW)
-
-    canvas1_1.create_text(w/2, 60*scale, text="99", font=f"Chiller 42", fill="white", anchor=CENTER) #mitt oben
-    canvas1_1.create_text(w/2, h-100*scale, text="1", font="Chiller 125", fill="white", anchor=CENTER) #mitte unten
+    ablageKarte = Frame(ablagestapelFrame)
+    ablageKarte.pack(side = LEFT)
+    
+    erzeugeAblageStapel(ablageKarte, scale, h, w, up, "1", "99").config(cursor="exchange")
 
     ablageKarte = Frame(ablagestapelFrame)
     ablageKarte.pack(side = LEFT)
 
-    canvas1_2 = tk.Canvas(ablageKarte, width=w, height=h)
-    canvas1_2.pack(side='top', fill=None, expand=False)
-
-    canvas1_2.create_image(0,0, image=up, anchor=NW)
-
-    canvas1_2.create_text(w/2, 60*scale, text="99", font="Chiller 42", fill="white", anchor=CENTER) #mitt oben
-    canvas1_2.create_text(w/2, h-100*scale, text="1", font="Chiller 125", fill="white", anchor=CENTER) #mitte unten
+    erzeugeAblageStapel(ablageKarte, scale, h, w, down, "100", "2").config(cursor="exchange")
 
     ablageKarte = Frame(ablagestapelFrame)
     ablageKarte.pack(side = LEFT)
 
-    canvas100_1 = tk.Canvas(ablageKarte, width=w, height=h)
-    canvas100_1.pack(side='top', fill=None, expand=False)
-
-    canvas100_1.create_image(0,0, image=down, anchor=NW)
-
-    canvas100_1.create_text(w/2, 125*scale, text="100", font="Chiller 110", fill="white", anchor=CENTER) #mitt oben
-    canvas100_1.create_text(w/2, h-50*scale, text="2", font="Chiller 50", fill="white", anchor=CENTER) #mitte unten
-
-    ablageKarte = Frame(ablagestapelFrame)
-    ablageKarte.pack(side = LEFT)
-
-    canvas100_2 = tk.Canvas(ablageKarte, width=w, height=h)
-    canvas100_2.pack(side='top', fill=None, expand=False)
-
-    canvas100_2.create_image(0,0, image=down, anchor=NW)
-
-    canvas100_2.create_text(w/2, 125*scale, text="100", font="Chiller 110", fill="white", anchor=CENTER) #mitt oben
-    canvas100_2.create_text(w/2, h-50*scale, text="2", font="Chiller 50", fill="white", anchor=CENTER) #mitte unten
+    erzeugeAblageStapel(ablageKarte, scale, h, w, down, "100", "2").config(cursor="exchange")
 
     global handkartenFrame
     handkartenFrame = Frame(root)
     handkartenFrame.pack(side=BOTTOM)
+
+def erzeugeAblageStapel(frame, scale, h, w, img, bigNumber, smallNumber):
+    canvas = tk.Canvas(frame, width=w, height=h)
+    canvas.pack(side='top', fill=None, expand=False)
+
+    canvas.create_image(0,0, image=img, anchor=NW)
+
+    canvas.create_text(w/2, 60*scale, text=smallNumber, font=f"Chiller 50", fill="white", anchor=CENTER) #mitt oben
+    canvas.create_text(w/2, h-100*scale, text=bigNumber, font="Chiller 110", fill="white", anchor=CENTER) #mitte unten
+    return canvas
 
 def deleteHandkarten():
     # destroy all widgets from frame
@@ -156,7 +142,7 @@ def karteAnzeigen(spielKarte):
     canvas = tk.Canvas(cardFrame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
-    canvas.create_image(0, 0, image=background, anchor=NW)
+    card = canvas.create_image(0, 0, image=background, anchor=NW)
                                                                                                         
     canvas.create_text(30 * scale, 20 * scale, text=spielKarte.value, font=actualfontcorner, fill="black",
                         anchor=NW)  # links oben
@@ -167,6 +153,10 @@ def karteAnzeigen(spielKarte):
                         anchor=SE)  # rechts unten
     canvas.create_text(w / 2, h * 0.6, text=spielKarte.value, font=actualfontmiddle, fill="black",
                         anchor=CENTER)  # mittlere Zahl
+
+    canvas.config(cursor="exchange")
+
+    #print(canvas.coords(card, [18.0, 12.0]))
 
 # """-----------------------------------BUTTONS---------------------------------------#
 
