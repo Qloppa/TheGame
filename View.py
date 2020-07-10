@@ -10,8 +10,10 @@ handkartenFrame = None
 background = None
 up = None
 down = None
+platzhalter = None
 TG_Version = None
 rev = None
+auswahlKarte = None
 
 def init(version, revNumber):
     global TG_Version
@@ -79,34 +81,62 @@ def createImage():
     global down
     down = ImageTk.PhotoImage(downImage)
 
+    platzhalterImg = Image.open("resources/Kartengrafiken/Spielkarte_platzhalter.png")
+    platzhalterImg = platzhalterImg.resize((w,h), Image.ANTIALIAS)
+    global platzhalter
+    platzhalter = ImageTk.PhotoImage(platzhalterImg)
+    
+    ablagestapelVorlageFrame = Frame(root)
+    ablagestapelVorlageFrame.pack(side=TOP)
+
     ablagestapelFrame = Frame(root)
     ablagestapelFrame.pack(side=TOP)
 
     ablageKarte = Frame(ablagestapelFrame)
     ablageKarte.pack(side = LEFT)
 
-    erzeugeAblageStapel(ablageKarte, scale, h, w, up, "1", "99").config(cursor="exchange")
+    erzeugeAblageKarte(ablageKarte, scale, h, w, platzhalter)
+
+    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
+    ablageKarteVorlage.pack(side = LEFT)
+
+    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, up, "1", "99").config(cursor="exchange")
 
     ablageKarte = Frame(ablagestapelFrame)
     ablageKarte.pack(side = LEFT)
+
+    erzeugeAblageKarte(ablageKarte, scale, h, w, platzhalter)
+
+    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
+    ablageKarteVorlage.pack(side = LEFT)
+
+    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, up, "1", "99").config(cursor="exchange")
     
-    erzeugeAblageStapel(ablageKarte, scale, h, w, up, "1", "99").config(cursor="exchange")
+    ablageKarte = Frame(ablagestapelFrame)
+    ablageKarte.pack(side = LEFT)
+
+    erzeugeAblageKarte(ablageKarte, scale, h, w, platzhalter)
+
+    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
+    ablageKarteVorlage.pack(side = LEFT)
+
+    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, down, "100", "2").config(cursor="exchange")
 
     ablageKarte = Frame(ablagestapelFrame)
     ablageKarte.pack(side = LEFT)
 
-    erzeugeAblageStapel(ablageKarte, scale, h, w, down, "100", "2").config(cursor="exchange")
+    erzeugeAblageKarte(ablageKarte, scale, h, w, platzhalter)
 
-    ablageKarte = Frame(ablagestapelFrame)
-    ablageKarte.pack(side = LEFT)
+    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
+    ablageKarteVorlage.pack(side = LEFT)
 
-    erzeugeAblageStapel(ablageKarte, scale, h, w, down, "100", "2").config(cursor="exchange")
+    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, down, "100", "2").config(cursor="exchange")
 
     global handkartenFrame
     handkartenFrame = Frame(root)
     handkartenFrame.pack(side=BOTTOM)
 
-def erzeugeAblageStapel(frame, scale, h, w, img, bigNumber, smallNumber):
+def erzeugeAblageStapelVorlage(frame, scale, h, w, img, bigNumber, smallNumber):
     canvas = tk.Canvas(frame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
@@ -116,12 +146,28 @@ def erzeugeAblageStapel(frame, scale, h, w, img, bigNumber, smallNumber):
     canvas.create_text(w/2, h-100*scale, text=bigNumber, font="Chiller 110", fill="white", anchor=CENTER) #mitte unten
     return canvas
 
+def erzeugeAblageKarte(frame, scale, h, w, img):
+    canvas = tk.Canvas(frame, width=w, height=h)
+    canvas.pack(side='top', fill=None, expand=False)
+
+    canvas.create_image(0,0, image=img, anchor=NW)
+    return canvas
+
+def erzeugeAblageStapel():
+    print("moin")
+
 def deleteHandkarten():
     # destroy all widgets from frame
     for widget in handkartenFrame.winfo_children():
        widget.destroy()
     # this will clear frame and frame will be empty
-    #handkartenFrame.pack(side=BOTTOM)
+
+def getClickedValue():
+    if auswahlKarte != None:
+        auswahl = auswahlKarte
+    else:
+        auswahl = 0
+    return auswahl
 
 def karteAnzeigen(spielKarte):
 
@@ -142,7 +188,7 @@ def karteAnzeigen(spielKarte):
     canvas = tk.Canvas(cardFrame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
-    card = canvas.create_image(0, 0, image=background, anchor=NW)
+    canvas.create_image(0, 0, image=background, anchor=NW)
                                                                                                         
     canvas.create_text(30 * scale, 20 * scale, text=spielKarte.value, font=actualfontcorner, fill="black",
                         anchor=NW)  # links oben
@@ -156,7 +202,15 @@ def karteAnzeigen(spielKarte):
 
     canvas.config(cursor="exchange")
 
-    #print(canvas.coords(card, [18.0, 12.0]))
+    
+    def buttonPressed(event):
+        global auswahlKarte
+        auswahlKarte = spielKarte.getValue()
+        print(f"Karte angeklickt {auswahlKarte}")
+
+    canvas.bind("<Button-1>", buttonPressed)
+    
+    return canvas
 
 # """-----------------------------------BUTTONS---------------------------------------#
 
