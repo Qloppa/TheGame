@@ -4,7 +4,7 @@ from VersionControl import VersionControl
 from Model import Kartenstapel, Handkarten, Spielkarte, Spieler, AblageStapelBereich, AblageStapel
 import View
 
-TG_Version = "0.0.4"
+TG_Version = "0.0.5"
 Final = False
 
 stapelGroesse = 99
@@ -21,6 +21,8 @@ print(f"Handkarten von {spieler1.name}:")
 spieler1.zieheHandKarten(7, KS)
 
 VC = VersionControl(TG_Version)
+
+abgelegteKarte = Spielkarte(0)
 
 ablageStapelBereich = AblageStapelBereich()
 
@@ -39,21 +41,28 @@ def buttonPressed(event):
     value = View.getClickedValue()
     print(f"karte geklickt: {value}")
     View.setClickedValue(0)
+    
     if value > 0:
-        spieler1.karteAblegen(value)
         print(f"value: {value}")
+        global abgelegteKarte
+        abgelegteKarte = spieler1.karteAblegen(value)
+        print(f"abgelegteKarte: {abgelegteKarte.value}")
         View.deleteHandkarten()
         View.setClickedValue(0)
         for karte in spieler1.handKarten.handKarten:
             View.handKarteAnzeigen(karte)
-    if value == -4:
-        print("hat geklappt")
+    if value < 0:
+        View.deleteAblagestapel()
+        ablageStapelBereich.updateAblageStapel(value+4, abgelegteKarte)
+        View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
+
 
 root = View.createWindow()
-root.bind("<Button-1>", buttonPressed)
 View.createImage()
-View.createButtons()
 View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
+root.bind("<Button-1>", buttonPressed)
+View.createButtons()
+
 
 # """-----------------------------------GUI---------------------------------------#
 

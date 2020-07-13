@@ -12,6 +12,7 @@ background = None
 up = None
 down = None
 platzhalter = None
+nachziehStapel = None
 TG_Version = None
 rev = None
 auswahlKarte = None
@@ -97,7 +98,7 @@ def createImage():
     h = int(638*scale)
 
     backgroundImage = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_0_unicorn.png") # ohne unicorn
-    backgroundImage = backgroundImage.resize((int(w),int(h)), Image.ANTIALIAS)
+    backgroundImage = backgroundImage.resize((w,h), Image.ANTIALIAS)
     global background
     background = ImageTk.PhotoImage(backgroundImage)
 
@@ -115,6 +116,11 @@ def createImage():
     platzhalterImg = platzhalterImg.resize((w,h), Image.ANTIALIAS)
     global platzhalter
     platzhalter = ImageTk.PhotoImage(platzhalterImg)
+
+    nachziehStapelImg = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_0_Kartenstapel.png")
+    nachziehStapelImg = nachziehStapelImg.resize((w,h), Image.ANTIALIAS)
+    global nachziehStapel
+    nachziehStapel = ImageTk.PhotoImage(nachziehStapelImg)
     
     ablagestapelVorlageFrame = Frame(root)
     ablagestapelVorlageFrame.pack(side=TOP)
@@ -122,9 +128,6 @@ def createImage():
     global ablagestapelFrame
     ablagestapelFrame = Frame(root)
     ablagestapelFrame.pack(side=TOP)
-    
-    #ablagekartenAnzahl = 4
-    #erzeugeAblageStapel(scale, h, w, ablagekartenAnzahl)
 
     ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
     ablageKarteVorlage.pack(side = LEFT)
@@ -148,7 +151,25 @@ def createImage():
 
     global handkartenFrame
     handkartenFrame = Frame(root)
-    handkartenFrame.pack(side=BOTTOM)
+    handkartenFrame.pack(side='bottom')
+
+    nachziehStapelFrame = Frame(handkartenFrame)
+    nachziehStapelFrame.pack(side=LEFT)
+
+    font = "Castellar"
+    fontsizecorner = 23
+    #Alter Font Chiller
+    actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
+
+    canvasLabel = Label(nachziehStapelFrame, text="Verbleibende Karten:", font=actualfontcorner)
+    canvasLabel.pack(side='top')
+
+    canvas = tk.Canvas(nachziehStapelFrame, width=w, height=h)
+    canvas.pack(side='top', fill=None, expand=False)
+
+    canvas.create_image(0,0, image=nachziehStapel, anchor=NW)
+
+
 
 def erzeugeAblageStapelVorlage(frame, scale, h, w, img, bigNumber, smallNumber):
     canvas = tk.Canvas(frame, width=w, height=h)
@@ -174,12 +195,6 @@ def erzeugeAblageKarte(frame, scale, h, w, index):
     canvas.bind("<Button-1>", stapelGewaehlt)
 
     return canvas
-
-def erzeugeAblageStapel(scale, h, w, anzahl):
-    for i in range(anzahl):
-        ablageKarte = Frame(ablagestapelFrame)
-        ablageKarte.pack(side = LEFT)
-        erzeugeAblageKarte(ablageKarte, scale, h, w, i)
 
 def aktuelisiereAblageKarte(frame, index, value):
     scale = 0.60
@@ -218,13 +233,13 @@ def aktuelisiereAblageKarte(frame, index, value):
         erzeugeAblageKarte(frame, scale, h, w, index)
 
 def aktualisiereAblageStapel(ablageStapel):
-    i = 0
+    index = 0
     for spielKarte in ablageStapel:
-        i = i+1
         ablageKarte = Frame(ablagestapelFrame)
         ablageKarte.pack(side = LEFT)
-        print(f"spielkarten: {spielKarte.getValue()}")
-        aktuelisiereAblageKarte(ablageKarte, i, spielKarte.getValue())
+        print(f"spielkarten: {spielKarte.value}")
+        aktuelisiereAblageKarte(ablageKarte, index, spielKarte.value)
+        index = index + 1
 
 def deleteHandkarten():
     # destroy all widgets from frame

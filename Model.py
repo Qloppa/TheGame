@@ -35,9 +35,10 @@ class AblageStapel:
 class AblageStapelBereich:
 
     def __init__(self):
-        self.ablageStapel = [Spielkarte(1),Spielkarte(3),Spielkarte(3),Spielkarte(7)]
+        self.ablageStapel = [Spielkarte(0),Spielkarte(0),Spielkarte(0),Spielkarte(0)]
 
     def updateAblageStapel(self, index, spielKarte):
+        print(f"index: {index} und {spielKarte.value}")
         self.ablageStapel[index] = spielKarte
 
 class Spieler:
@@ -51,6 +52,10 @@ class Spieler:
             self.handKarten.handKarten.append(kartenstapel.spielKarten.pop())
 
     def karteAblegen(self, nummer):
+        abgelegteKarte = Spielkarte(0)
         for spielKarte in self.handKarten.handKarten:
             if spielKarte.getValue()==nummer:
+                abgelegteKarte = spielKarte
+                print(f"ak: {abgelegteKarte.getValue()}")
                 self.handKarten.handKarten.remove(spielKarte)
+        return abgelegteKarte
