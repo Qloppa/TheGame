@@ -1,5 +1,10 @@
 CHANGELOG:
 
+13-07-20:
+    * Karten können aus der Hand genommen werden
+    * Karten können auf dem Ablage stapel generiert werden
+    * GUI Änderungen
+
 22-06-20:
     * Frame für die Ablagestapel
     * Frame für die Handkarten

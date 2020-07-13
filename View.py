@@ -16,6 +16,8 @@ TG_Version = None
 rev = None
 auswahlKarte = None
 ablagestapelFrame = None
+check_FS = None
+#screenmode = None
 
 
 def init(version, revNumber):
@@ -30,7 +32,10 @@ def createWindow():
     root.title("THE GAME!")
     root.iconbitmap(_GAME_ICON)
     root.geometry("1920x1080")
+    root.attributes
     root.attributes('-fullscreen', False)
+    global check_FS
+    check_FS = False
     createMenu()
     return root
 
@@ -48,20 +53,42 @@ def aboutTG():
                    "Ver. " + TG_Version + "." + rev)
     aboutLabel.pack()
 
+def fullscreen():
+    global check_FS
+    global actualwidth
+    global actualheight
+
+    if not check_FS:
+        actualwidth = root.winfo_width()
+        actualheight = root.winfo_height()
+        print("Kein Vollbild")
+        root.attributes('-fullscreen', True)
+        global screenmode
+        #screenmode = "Vollbild"
+        check_FS = True
+    else:
+        print("Vollbild")
+        print(actualwidth, actualheight)
+        root.attributes('-fullscreen', False)
+        root.geometry(f"" + str(actualwidth) + "x" + str(actualheight))
+        #screenmode = "Kein Vollbild"
+        check_FS = False
+
 def createMenu():
     menu = Menu(root)
     subMenu = Menu(menu, tearoff=0)
     root.config(menu=menu)
 
     menu.add_cascade(label="Spiel", menu=subMenu)
-    subMenu.add_command(label="Neue Karten", command=doNothing)
-    subMenu.add_command(label='Über The Game', command=aboutTG)
+    subMenu.add_command(label="Neue Spiel", command=doNothing)
+    subMenu.add_command(label="Spiel Laden", command=doNothing)
+    subMenu.add_command(label="Spiel Speichern", command=doNothing)
     subMenu.add_separator()
     subMenu.add_command(label="Beenden", command=root.destroy)
-
     editMenu = Menu(menu, tearoff=0)
     menu.add_cascade(label="Einstellungen", menu=editMenu)
-    editMenu.add_command(label="1337", command=doNothing)
+    editMenu.add_command(label="Screenmode", command=fullscreen)
+    editMenu.add_command(label='Über The Game', command=aboutTG)
 
 # """-----------------------------------IMAGE---------------------------------------#
 def createImage():
