@@ -27,6 +27,18 @@ class Handkarten:
         print("HandKarten initialisiert")
         self.handKarten = []
 
+class AblageStapel:
+    
+    def __init__(self, spielKarte):
+        self.spielKarte = spielKarte
+
+class AblageStapelBereich:
+
+    def __init__(self):
+        self.ablageStapel = [Spielkarte(1),Spielkarte(3),Spielkarte(3),Spielkarte(7)]
+
+    def updateAblageStapel(self, index, spielKarte):
+        self.ablageStapel[index] = spielKarte
 
 class Spieler:
 

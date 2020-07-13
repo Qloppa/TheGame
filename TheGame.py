@@ -1,7 +1,7 @@
 import random
 import numpy as np
 from VersionControl import VersionControl
-from Model import Kartenstapel, Handkarten, Spielkarte, Spieler
+from Model import Kartenstapel, Handkarten, Spielkarte, Spieler, AblageStapelBereich, AblageStapel
 import View
 
 TG_Version = "0.0.4"
@@ -22,6 +22,7 @@ spieler1.zieheHandKarten(7, KS)
 
 VC = VersionControl(TG_Version)
 
+ablageStapelBereich = AblageStapelBereich()
 
 
 if Final == False: #DEAKTIVIERT DAS ZÄHLEN DER REVISIONEN IM FINALEN BUILD
@@ -34,15 +35,17 @@ else:
 View.init(TG_Version, VC.useRev())
 
 def buttonPressed(event):
-    print("karte geklickt")
+    
     value = View.getClickedValue()
+    print(f"karte geklickt: {value}")
+    View.setClickedValue(0)
     if value > 0:
         spieler1.karteAblegen(value)
         print(f"value: {value}")
         View.deleteHandkarten()
         View.setClickedValue(0)
         for karte in spieler1.handKarten.handKarten:
-            View.karteAnzeigen(karte)
+            View.handKarteAnzeigen(karte)
     if value == -4:
         print("hat geklappt")
 
@@ -50,6 +53,7 @@ root = View.createWindow()
 root.bind("<Button-1>", buttonPressed)
 View.createImage()
 View.createButtons()
+View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
 
 # """-----------------------------------GUI---------------------------------------#
 
@@ -58,7 +62,7 @@ print("The Game:")
 print("Kartenstapel:")
 
 for karte in spieler1.handKarten.handKarten:    
-    View.karteAnzeigen(karte)
+    View.handKarteAnzeigen(karte)
     
 
 print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
