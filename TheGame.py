@@ -37,24 +37,21 @@ else:
 View.init(TG_Version, VC.useRev())
 
 def buttonPressed(event):
-    
+
     value = View.getClickedValue()
     print(f"karte geklickt: {value}")
     View.setClickedValue(0)
-    
-    if value > 0:
-        print(f"value: {value}")
-        global abgelegteKarte
-        abgelegteKarte = spieler1.karteAblegen(value)
-        print(f"abgelegteKarte: {abgelegteKarte.value}")
-        View.deleteHandkarten()
-        View.setClickedValue(0)
-        for karte in spieler1.handKarten.handKarten:
-            View.handKarteAnzeigen(karte)
-    if value < 0:
-        View.deleteAblagestapel()
-        ablageStapelBereich.updateAblageStapel(value+4, abgelegteKarte)
-        View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
+
+    print(f"value: {value}")
+    print(f"abgelegteKarte: {abgelegteKarte.value}")
+    View.deleteHandkarten()
+    View.setClickedValue(0)
+    for karte in spieler1.handKarten.handKarten:
+        View.handKarteAnzeigen(karte)
+        if value < 0:
+           View.deleteAblagestapel()
+           ablageStapelBereich.updateAblageStapel(value+4, abgelegteKarte)
+           View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
 
 
 root = View.createWindow()
