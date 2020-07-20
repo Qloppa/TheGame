@@ -38,18 +38,19 @@ def createWindow():
     #root.geometry("1920x1080")
     root.attributes
     root.attributes('-fullscreen', True)
-    windowScaling(root.winfo_screenheight())
+    windowScaling(root.winfo_screenheight(), root.winfo_screenwidth())
     print(f"scale: {scale}")
     global check_FS
     check_FS = False
     createMenu()
     return root
 
-def windowScaling(height):
+def windowScaling(height,width):
     global scale
-    scalePerPixel = scale/1080
-    scale = scalePerPixel*height
+    scalePerPixel = scale/(1080*1920)
+    scale = scalePerPixel*(height*width)
     return scale
+
 
 
 
