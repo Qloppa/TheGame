@@ -3,7 +3,6 @@ import tkinter as tk
 from PIL import ImageTk
 from PIL import Image
 
-
 _GAME_ICON = "resources/THE_GAME_ICON.ico"
 
 root = None
@@ -18,7 +17,10 @@ rev = None
 auswahlKarte = None
 ablagestapelFrame = None
 check_FS = None
-#screenmode = None
+
+
+
+# screenmode = None
 
 
 def init(version, revNumber):
@@ -26,6 +28,7 @@ def init(version, revNumber):
     TG_Version = version
     global rev
     rev = revNumber
+
 
 def createWindow():
     global root
@@ -40,9 +43,11 @@ def createWindow():
     createMenu()
     return root
 
+
 # """-----------------------------------MENU---------------------------------------#
 def doNothing():
     print("OK, I do Nothing")
+
 
 def aboutTG():
     newWindow = Toplevel(root)
@@ -50,9 +55,10 @@ def aboutTG():
     newWindow.iconbitmap(_GAME_ICON)
     newWindow.geometry("250x60")
     aboutLabel = Label(newWindow, text=f"The Game\n" +
-                   "by Qloppa & Balboran\n" +
-                   "Ver. " + TG_Version + "." + rev)
+                                       "by Qloppa & Balboran\n" +
+                                       "Ver. " + TG_Version + "." + rev)
     aboutLabel.pack()
+
 
 def fullscreen():
     global check_FS
@@ -65,15 +71,16 @@ def fullscreen():
         print("Kein Vollbild")
         root.attributes('-fullscreen', True)
         global screenmode
-        #screenmode = "Vollbild"
+        # screenmode = "Vollbild"
         check_FS = True
     else:
         print("Vollbild")
         print(actualwidth, actualheight)
         root.attributes('-fullscreen', False)
         root.geometry(f"" + str(actualwidth) + "x" + str(actualheight))
-        #screenmode = "Kein Vollbild"
+        # screenmode = "Kein Vollbild"
         check_FS = False
+
 
 def createMenu():
     menu = Menu(root)
@@ -91,74 +98,63 @@ def createMenu():
     editMenu.add_command(label="Screenmode", command=fullscreen)
     editMenu.add_command(label='Über The Game', command=aboutTG)
 
+
 # """-----------------------------------IMAGE---------------------------------------#
 def createImage():
     scale = 0.60
-    w = int(439*scale)
-    h = int(638*scale)
+    w = int(439 * scale)
+    h = int(638 * scale)
 
-    backgroundImage = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_0_unicorn.png") # ohne unicorn
-    backgroundImage = backgroundImage.resize((w,h), Image.ANTIALIAS)
+    backgroundImage = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_0_unicorn.png")  # ohne unicorn
+    backgroundImage = backgroundImage.resize((w, h), Image.ANTIALIAS)
     global background
     background = ImageTk.PhotoImage(backgroundImage)
 
     upImage = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_ARROW_UP.png")
-    upImage = upImage.resize((w,h), Image.ANTIALIAS)
+    upImage = upImage.resize((w, h), Image.ANTIALIAS)
     global up
     up = ImageTk.PhotoImage(upImage)
 
     downImage = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_ARROW_Down.png")
-    downImage = downImage.resize((w,h), Image.ANTIALIAS)
+    downImage = downImage.resize((w, h), Image.ANTIALIAS)
     global down
     down = ImageTk.PhotoImage(downImage)
 
     platzhalterImg = Image.open("resources/Kartengrafiken/Spielkarte_platzhalter.png")
-    platzhalterImg = platzhalterImg.resize((w,h), Image.ANTIALIAS)
+    platzhalterImg = platzhalterImg.resize((w, h), Image.ANTIALIAS)
     global platzhalter
     platzhalter = ImageTk.PhotoImage(platzhalterImg)
 
     nachziehStapelImg = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_0_Kartenstapel.png")
-    nachziehStapelImg = nachziehStapelImg.resize((w,h), Image.ANTIALIAS)
+    nachziehStapelImg = nachziehStapelImg.resize((w, h), Image.ANTIALIAS)
     global nachziehStapel
     nachziehStapel = ImageTk.PhotoImage(nachziehStapelImg)
-    
-    ablagestapelVorlageFrame = Frame(root)
-    ablagestapelVorlageFrame.pack(side=TOP)
 
-    global ablagestapelFrame
-    ablagestapelFrame = Frame(root)
-    ablagestapelFrame.pack(side=TOP)
+    sideFrameleft = Frame(root)
+    sideFrameleft.pack(side='left', fill=Y)
 
-    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
-    ablageKarteVorlage.pack(side = LEFT)
+    sideFrameright = Frame(root)
+    sideFrameright.pack(side="right", fill=Y)
 
-    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, up, "1", "99").config(cursor="exchange")
+    player1NF = Frame(sideFrameleft)
+    player1NF.pack(side="top")
 
-    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
-    ablageKarteVorlage.pack(side = LEFT)
+    player2NF = Frame(sideFrameright)
+    player2NF.pack(side="top")
 
-    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, up, "1", "99").config(cursor="exchange")
+    player1NL = Label(player1NF, text="Spieler1")
+    player1NL.pack(side="top")
 
-    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
-    ablageKarteVorlage.pack(side = LEFT)
+    player2NL = Label(player2NF, text="Spieler2")
+    player2NL.pack(side="top")
 
-    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, down, "100", "2").config(cursor="exchange")
+    nachziehStapelFrame = Frame(sideFrameleft)
+    nachziehStapelFrame.pack(side='bottom')
 
-    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
-    ablageKarteVorlage.pack(side = LEFT)
-
-    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, down, "100", "2").config(cursor="exchange")
-
-    global handkartenFrame
-    handkartenFrame = Frame(root)
-    handkartenFrame.pack(side='bottom')
-
-    nachziehStapelFrame = Frame(handkartenFrame)
-    nachziehStapelFrame.pack(side=LEFT)
 
     font = "Castellar"
     fontsizecorner = 23
-    #Alter Font Chiller
+    # Alter Font Chiller
     actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
 
     canvasLabel = Label(nachziehStapelFrame, text="Verbleibende Karten:", font=actualfontcorner)
@@ -167,7 +163,39 @@ def createImage():
     canvas = tk.Canvas(nachziehStapelFrame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
-    canvas.create_image(0,0, image=nachziehStapel, anchor=NW)
+    canvas.create_image(0, 0, image=nachziehStapel, anchor=NW)
+
+
+    ablagestapelVorlageFrame = Frame(root)
+    ablagestapelVorlageFrame.pack(side=TOP)
+
+    global ablagestapelFrame
+    ablagestapelFrame = Frame(root)
+    ablagestapelFrame.pack(side=TOP)
+
+    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
+    ablageKarteVorlage.pack(side=LEFT)
+
+    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, up, "1", "99").config(cursor="exchange")
+
+    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
+    ablageKarteVorlage.pack(side=LEFT)
+
+    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, up, "1", "99").config(cursor="exchange")
+
+    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
+    ablageKarteVorlage.pack(side=LEFT)
+
+    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, down, "100", "2").config(cursor="exchange")
+
+    ablageKarteVorlage = Frame(ablagestapelVorlageFrame)
+    ablageKarteVorlage.pack(side=LEFT)
+
+    erzeugeAblageStapelVorlage(ablageKarteVorlage, scale, h, w, down, "100", "2").config(cursor="exchange")
+
+    global handkartenFrame
+    handkartenFrame = Frame(root)
+    handkartenFrame.pack(side='bottom')
 
 
 
@@ -175,37 +203,41 @@ def erzeugeAblageStapelVorlage(frame, scale, h, w, img, bigNumber, smallNumber):
     canvas = tk.Canvas(frame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
-    canvas.create_image(0,0, image=img, anchor=NW)
+    canvas.create_image(0, 0, image=img, anchor=NW)
 
-    canvas.create_text(w/2, 60*scale, text=smallNumber, font=f"Chiller 50", fill="white", anchor=CENTER) #mitt oben
-    canvas.create_text(w/2, h-100*scale, text=bigNumber, font="Chiller 110", fill="white", anchor=CENTER) #mitte unten
+    canvas.create_text(w / 2, 60 * scale, text=smallNumber, font=f"Chiller 50", fill="white",
+                       anchor=CENTER)  # mitt oben
+    canvas.create_text(w / 2, h - 100 * scale, text=bigNumber, font="Chiller 110", fill="white",
+                       anchor=CENTER)  # mitte unten
     return canvas
+
 
 def erzeugeAblageKarte(frame, scale, h, w, index):
     print(f"erzeugeAblageKarte {index}")
     canvas = tk.Canvas(frame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
-    canvas.create_image(0,0, image=platzhalter, anchor=NW)
+    canvas.create_image(0, 0, image=platzhalter, anchor=NW)
 
     def stapelGewaehlt(event):
         global auswahlKarte
-        auswahlKarte = index-4
+        auswahlKarte = index - 4
 
     canvas.bind("<Button-1>", stapelGewaehlt)
 
     return canvas
 
+
 def aktuelisiereAblageKarte(frame, index, value):
     scale = 0.60
-    w = int(439*scale)
-    h = int(638*scale)
+    w = int(439 * scale)
+    h = int(638 * scale)
 
     if value >= 1:
         fontsizecorner = 42
         fontsizemiddle = 137
         font = "Castellar"
-        #Alter Font Chiller
+        # Alter Font Chiller
         actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
         actualfontmiddle = f"{font} {str(int(fontsizemiddle * scale))}"
 
@@ -213,43 +245,47 @@ def aktuelisiereAblageKarte(frame, index, value):
         canvas.pack(side='top', fill=None, expand=False)
 
         canvas.create_image(0, 0, image=background, anchor=NW)
-                                                                                                            
+
         canvas.create_text(30 * scale, 20 * scale, text=value, font=actualfontcorner, fill="black",
-                            anchor=NW)  # links oben
+                           anchor=NW)  # links oben
         canvas.create_text(w - 20 * scale, 20 * scale, text=value, font=actualfontcorner, fill="black",
-                            anchor=NE)  # rechts oben
+                           anchor=NE)  # rechts oben
         canvas.create_text(30 * scale, h, text=value, font=actualfontcorner, fill="black", anchor=SW)  # links unten
         canvas.create_text(w - 20 * scale, h, text=value, font=actualfontcorner, fill="black",
-                            anchor=SE)  # rechts unten
+                           anchor=SE)  # rechts unten
         canvas.create_text(w / 2, h * 0.6, text=value, font=actualfontmiddle, fill="black",
-                            anchor=CENTER)  # mittlere Zahl
+                           anchor=CENTER)  # mittlere Zahl
 
         def karteGewaehlt(event):
             global auswahlKarte
-            auswahlKarte = index-4
+            auswahlKarte = index - 4
 
         canvas.bind("<Button-1>", karteGewaehlt)
     else:
         erzeugeAblageKarte(frame, scale, h, w, index)
 
+
 def aktualisiereAblageStapel(ablageStapel):
     index = 0
     for spielKarte in ablageStapel:
         ablageKarte = Frame(ablagestapelFrame)
-        ablageKarte.pack(side = LEFT)
+        ablageKarte.pack(side=LEFT)
         print(f"spielkarten: {spielKarte.value}")
         aktuelisiereAblageKarte(ablageKarte, index, spielKarte.value)
         index = index + 1
 
+
 def deleteHandkarten():
     # destroy all widgets from frame
     for widget in handkartenFrame.winfo_children():
-       widget.destroy()
+        widget.destroy()
     # this will clear frame and frame will be empty
+
 
 def deleteAblagestapel():
     for widget in ablagestapelFrame.winfo_children():
-       widget.destroy()
+        widget.destroy()
+
 
 def getClickedValue():
     if auswahlKarte != None:
@@ -258,20 +294,22 @@ def getClickedValue():
         auswahl = 0
     return auswahl
 
+
 def setClickedValue(value):
     global auswahlKarte
     auswahlKarte = value
+
 
 def handKarteAnzeigen(spielKarte):
     cardFrame = Frame(handkartenFrame)
     cardFrame.pack(side=LEFT)
 
-    #Scaling für die Zahlen und die Gesamte Karte
+    # Scaling für die Zahlen und die Gesamte Karte
     scale = 0.6
     fontsizecorner = 42
     fontsizemiddle = 137
     font = "Castellar"
-    #Alter Font Chiller
+    # Alter Font Chiller
     actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
     actualfontmiddle = f"{font} {str(int(fontsizemiddle * scale))}"
     w = 439 * scale
@@ -281,28 +319,29 @@ def handKarteAnzeigen(spielKarte):
     canvas.pack(side='top', fill=None, expand=False)
 
     canvas.create_image(0, 0, image=background, anchor=NW)
-                                                                                                        
+
     canvas.create_text(30 * scale, 20 * scale, text=spielKarte.value, font=actualfontcorner, fill="black",
-                        anchor=NW)  # links oben
+                       anchor=NW)  # links oben
     canvas.create_text(w - 20 * scale, 20 * scale, text=spielKarte.value, font=actualfontcorner, fill="black",
-                        anchor=NE)  # rechts oben
-    canvas.create_text(30 * scale, h, text=spielKarte.value, font=actualfontcorner, fill="black", anchor=SW)  # links unten
+                       anchor=NE)  # rechts oben
+    canvas.create_text(30 * scale, h, text=spielKarte.value, font=actualfontcorner, fill="black",
+                       anchor=SW)  # links unten
     canvas.create_text(w - 20 * scale, h, text=spielKarte.value, font=actualfontcorner, fill="black",
-                        anchor=SE)  # rechts unten
+                       anchor=SE)  # rechts unten
     canvas.create_text(w / 2, h * 0.6, text=spielKarte.value, font=actualfontmiddle, fill="black",
-                        anchor=CENTER)  # mittlere Zahl
+                       anchor=CENTER)  # mittlere Zahl
 
     canvas.config(cursor="exchange")
 
-    
     def buttonPressed(event):
         global auswahlKarte
         auswahlKarte = spielKarte.getValue()
         print(f"Karte angeklickt {auswahlKarte}")
 
     canvas.bind("<Button-1>", buttonPressed)
-    
+
     return canvas
+
 
 # """-----------------------------------BUTTONS---------------------------------------#
 

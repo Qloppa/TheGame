@@ -26,8 +26,7 @@ abgelegteKarte = Spielkarte(0)
 
 ablageStapelBereich = AblageStapelBereich()
 
-
-if Final == False: #DEAKTIVIERT DAS ZÄHLEN DER REVISIONEN IM FINALEN BUILD
+if Final == False:  # DEAKTIVIERT DAS ZÄHLEN DER REVISIONEN IM FINALEN BUILD
     VC.getRev()
 else:
     VC.releaseRev()
@@ -36,22 +35,25 @@ else:
 
 View.init(TG_Version, VC.useRev())
 
-def buttonPressed(event):
 
+def buttonPressed(event):
     value = View.getClickedValue()
     print(f"karte geklickt: {value}")
     View.setClickedValue(0)
 
-    print(f"value: {value}")
-    print(f"abgelegteKarte: {abgelegteKarte.value}")
-    View.deleteHandkarten()
-    View.setClickedValue(0)
-    for karte in spieler1.handKarten.handKarten:
-        View.handKarteAnzeigen(karte)
-        if value < 0:
-           View.deleteAblagestapel()
-           ablageStapelBereich.updateAblageStapel(value+4, abgelegteKarte)
-           View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
+    if value > 0:
+        print(f"value: {value}")
+        global abgelegteKarte
+        abgelegteKarte = spieler1.karteAblegen(value)
+        print(f"abgelegteKarte: {abgelegteKarte.value}")
+        View.deleteHandkarten()
+        View.setClickedValue(0)
+        for karte in spieler1.handKarten.handKarten:
+            View.handKarteAnzeigen(karte)
+    if value < 0:
+        View.deleteAblagestapel()
+        ablageStapelBereich.updateAblageStapel(value + 4, abgelegteKarte)
+        View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
 
 
 root = View.createWindow()
@@ -60,22 +62,20 @@ View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
 root.bind("<Button-1>", buttonPressed)
 View.createButtons()
 
-
 # """-----------------------------------GUI---------------------------------------#
 
 print("The Game:")
 
 print("Kartenstapel:")
 
-for karte in spieler1.handKarten.handKarten:    
+for karte in spieler1.handKarten.handKarten:
     View.handKarteAnzeigen(karte)
-    
 
 print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
 
-#ablegeKarte = input("welche Karte willst du spielen? ")
+# ablegeKarte = input("welche Karte willst du spielen? ")
 
-#spieler1.karteAblegen(View.getClickedValue())
+# spieler1.karteAblegen(View.getClickedValue())
 
 print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
 
