@@ -17,7 +17,6 @@ rev = None
 auswahlKarte = None
 ablagestapelFrame = None
 check_FS = None
-scaleFactor = 0.3
 scale = None
 font = "Chiller" # Fonts: Chiller, Castellar
 
@@ -36,20 +35,34 @@ def createWindow():
     root = Tk()
     root.title("THE GAME!")
     root.iconbitmap(_GAME_ICON)
-    #root.geometry("1920x1080")
     root.attributes
     root.attributes('-fullscreen', True)
-    windowScaling(root.winfo_screenheight(), root.winfo_screenwidth()) #
+    windowScaling(root.winfo_screenwidth(), root.winfo_screenheight())
     print(f"scale: {scale}")
     global check_FS
     check_FS = False
     createMenu()
     return root
 
-def windowScaling(height, width):
+def windowScaling(width, height):
     global scale
-    global scaleFactor
-    scale = scaleFactor * height*width/(1080*1920)
+    if (round((width/height),2)==round((1920/1080),2) or round((width/height),2)==round((1360/768),2)):
+        scalePerPixel = 0.40/1080
+        scale = scalePerPixel * height
+    if (round((width/height),2)==round((1600/1200),2)):
+        scalePerPixel = 0.35/1200
+        scale = scalePerPixel * height
+    if (round((width/height),2)==round((1920/1200),2) or round((width/height),2)==round((1280/768),2)):
+        scalePerPixel = 0.42/1200
+        scale = scalePerPixel * height
+    if (round((width/height),2)==round((1280/1024),2)):
+        scalePerPixel = 0.28/1024
+        scale = scalePerPixel * height
+    if (round((width/height),2)==round((1600/1024),2)):
+        scalePerPixel = 0.36/1024
+        scale = scalePerPixel * height
+
+
 
 
 # """-----------------------------------MENU---------------------------------------#
