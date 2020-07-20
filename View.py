@@ -17,7 +17,8 @@ rev = None
 auswahlKarte = None
 ablagestapelFrame = None
 check_FS = None
-scale = 0.40
+scaleFactor = 0.3
+scale = None
 font = "Chiller" # Fonts: Chiller, Castellar
 
 # screenmode = None
@@ -38,20 +39,17 @@ def createWindow():
     #root.geometry("1920x1080")
     root.attributes
     root.attributes('-fullscreen', True)
-    windowScaling(root.winfo_screenheight(), root.winfo_screenwidth())
+    windowScaling(root.winfo_screenheight(), root.winfo_screenwidth()) #
     print(f"scale: {scale}")
     global check_FS
     check_FS = False
     createMenu()
     return root
 
-def windowScaling(height,width):
+def windowScaling(height, width):
     global scale
-    scalePerPixel = scale/(1080*1920)
-    scale = scalePerPixel*(height*width)
-    return scale
-
-
+    global scaleFactor
+    scale = scaleFactor * height*width/(1080*1920)
 
 
 # """-----------------------------------MENU---------------------------------------#
