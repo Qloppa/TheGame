@@ -35,13 +35,22 @@ def createWindow():
     root = Tk()
     root.title("THE GAME!")
     root.iconbitmap(_GAME_ICON)
-    root.geometry("1920x1080")
+    #root.geometry("1920x1080")
     root.attributes
-    root.attributes('-fullscreen', False)
+    root.attributes('-fullscreen', True)
+    windowScaling(root.winfo_screenheight())
+    print(f"scale: {scale}")
     global check_FS
     check_FS = False
     createMenu()
     return root
+
+def windowScaling(height):
+    global scale
+    scalePerPixel = scale/1080
+    scale = scalePerPixel*height
+    return scale
+
 
 
 # """-----------------------------------MENU---------------------------------------#
@@ -158,14 +167,10 @@ def createImage():
 
     canvas.create_image(0, 0, image=nachziehStapel, anchor=NW)
 
+    
     nachziehStapelFrame.update()
-    print(nachziehStapelFrame.winfo_geometry())
     leftframewidth = nachziehStapelFrame.winfo_width()
     leftframeheight = nachziehStapelFrame.winfo_height()
-
-    print(leftframewidth)
-    print(leftframeheight)
-
 
     sideFrameright = Frame(root, bg="blue", width=leftframewidth)
     sideFrameright.pack_propagate(0)
