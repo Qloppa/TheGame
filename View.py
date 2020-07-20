@@ -17,8 +17,8 @@ rev = None
 auswahlKarte = None
 ablagestapelFrame = None
 check_FS = None
-
-
+scale = 0.40
+font = "Chiller" # Fonts: Chiller, Castellar
 
 # screenmode = None
 
@@ -101,11 +101,12 @@ def createMenu():
 
 # """-----------------------------------IMAGE---------------------------------------#
 def createImage():
-    scale = 0.60
+    global scale
+    global font
     w = int(439 * scale)
     h = int(638 * scale)
 
-    backgroundImage = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_0_unicorn.png")  # ohne unicorn
+    backgroundImage = Image.open("resources/Kartengrafiken/Spielkarte_MUSTER_0.png")  # ohne unicorn
     backgroundImage = backgroundImage.resize((w, h), Image.ANTIALIAS)
     global background
     background = ImageTk.PhotoImage(backgroundImage)
@@ -130,31 +131,23 @@ def createImage():
     global nachziehStapel
     nachziehStapel = ImageTk.PhotoImage(nachziehStapelImg)
 
-    sideFrameleft = Frame(root)
+    sideFrameleft = Frame(root, bg="blue")
     sideFrameleft.pack(side='left', fill=Y)
-
-    sideFrameright = Frame(root)
-    sideFrameright.pack(side="right", fill=Y)
 
     player1NF = Frame(sideFrameleft)
     player1NF.pack(side="top")
 
-    player2NF = Frame(sideFrameright)
-    player2NF.pack(side="top")
+    player1NL = Label(player1NF, text="Spieler1", bg="red")
+    player1NL.pack()
 
-    player1NL = Label(player1NF, text="Spieler1")
-    player1NL.pack(side="top")
-
-    player2NL = Label(player2NF, text="Spieler2")
-    player2NL.pack(side="top")
 
     nachziehStapelFrame = Frame(sideFrameleft)
     nachziehStapelFrame.pack(side='bottom')
 
-
-    font = "Castellar"
-    fontsizecorner = 23
-    # Alter Font Chiller
+    if font == "Chiller":
+        fontsizecorner = 55
+    else:
+        fontsizecorner = 23
     actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
 
     canvasLabel = Label(nachziehStapelFrame, text="Verbleibende Karten:", font=actualfontcorner)
@@ -165,9 +158,28 @@ def createImage():
 
     canvas.create_image(0, 0, image=nachziehStapel, anchor=NW)
 
+    nachziehStapelFrame.update()
+    print(nachziehStapelFrame.winfo_geometry())
+    leftframewidth = nachziehStapelFrame.winfo_width()
+    leftframeheight = nachziehStapelFrame.winfo_height()
+
+    print(leftframewidth)
+    print(leftframeheight)
+
+
+    sideFrameright = Frame(root, bg="blue", width=leftframewidth)
+    sideFrameright.pack_propagate(0)
+    sideFrameright.pack(side="right", fill=Y)
+
+    player2NF = Frame(sideFrameright)
+    player2NF.pack(side="top")
+
+    player2NL = Label(player2NF, text="Spieler2", bg="red")
+    player2NL.pack(side="top")
+
 
     ablagestapelVorlageFrame = Frame(root)
-    ablagestapelVorlageFrame.pack(side=TOP)
+    ablagestapelVorlageFrame.pack(side="top")
 
     global ablagestapelFrame
     ablagestapelFrame = Frame(root)
@@ -198,16 +210,23 @@ def createImage():
     handkartenFrame.pack(side='bottom')
 
 
-
 def erzeugeAblageStapelVorlage(frame, scale, h, w, img, bigNumber, smallNumber):
+
+    global font
+    fontsizesmall = 50
+    fontsizebig = 110
+    # Alter Font Castellar
+    smallNumberFont = f"{font} {str(int(fontsizesmall * scale))}"
+    bigNumberFont = f"{font} {str(int(fontsizebig * scale))}"
+
     canvas = tk.Canvas(frame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
     canvas.create_image(0, 0, image=img, anchor=NW)
 
-    canvas.create_text(w / 2, 60 * scale, text=smallNumber, font=f"Chiller 50", fill="white",
+    canvas.create_text(w / 2, 60 * scale, text=smallNumber, font=smallNumberFont, fill="white",
                        anchor=CENTER)  # mitt oben
-    canvas.create_text(w / 2, h - 100 * scale, text=bigNumber, font="Chiller 110", fill="white",
+    canvas.create_text(w / 2, h - 100 * scale, text=bigNumber, font=bigNumberFont, fill="white",
                        anchor=CENTER)  # mitte unten
     return canvas
 
@@ -229,14 +248,14 @@ def erzeugeAblageKarte(frame, scale, h, w, index):
 
 
 def aktuelisiereAblageKarte(frame, index, value):
-    scale = 0.60
+    global scale
+    global font
     w = int(439 * scale)
     h = int(638 * scale)
 
     if value >= 1:
         fontsizecorner = 42
         fontsizemiddle = 137
-        font = "Castellar"
         # Alter Font Chiller
         actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
         actualfontmiddle = f"{font} {str(int(fontsizemiddle * scale))}"
@@ -305,11 +324,11 @@ def handKarteAnzeigen(spielKarte):
     cardFrame.pack(side=LEFT)
 
     # Scaling für die Zahlen und die Gesamte Karte
-    scale = 0.6
+    global scale
+    global font
     fontsizecorner = 42
     fontsizemiddle = 137
-    font = "Castellar"
-    # Alter Font Chiller
+    # Alter Font Chiller/Castellar
     actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
     actualfontmiddle = f"{font} {str(int(fontsizemiddle * scale))}"
     w = 439 * scale
@@ -357,3 +376,5 @@ def createButtons():
 
     quit = Button(bottomFrame, text="Beenden", command=root.destroy)
     quit.pack()
+
+
