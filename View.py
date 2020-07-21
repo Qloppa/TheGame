@@ -18,7 +18,13 @@ auswahlKarte = None
 ablagestapelFrame = None
 check_FS = None
 scale = None
-font = "Chiller" # Fonts: Chiller, Castellar
+font = "Chiller"  # Fonts: Chiller, Castellar
+check_state = True
+ablagestapelVorlageFrame = None
+player1name = None
+check_name = False
+name_trigger = False
+
 
 # screenmode = None
 
@@ -44,25 +50,24 @@ def createWindow():
     createMenu()
     return root
 
+
 def windowScaling(width, height):
     global scale
-    if (round((width/height),2)==round((1920/1080),2) or round((width/height),2)==round((1360/768),2)):
-        scalePerPixel = 0.40/1080
+    if (round((width / height), 2) == round((1920 / 1080), 2) or round((width / height), 2) == round((1360 / 768), 2)):
+        scalePerPixel = 0.40 / 1080
         scale = scalePerPixel * height
-    if (round((width/height),2)==round((1600/1200),2)):
-        scalePerPixel = 0.35/1200
+    if (round((width / height), 2) == round((1600 / 1200), 2)):
+        scalePerPixel = 0.35 / 1200
         scale = scalePerPixel * height
-    if (round((width/height),2)==round((1920/1200),2) or round((width/height),2)==round((1280/768),2)):
-        scalePerPixel = 0.42/1200
+    if (round((width / height), 2) == round((1920 / 1200), 2) or round((width / height), 2) == round((1280 / 768), 2)):
+        scalePerPixel = 0.42 / 1200
         scale = scalePerPixel * height
-    if (round((width/height),2)==round((1280/1024),2)):
-        scalePerPixel = 0.28/1024
+    if (round((width / height), 2) == round((1280 / 1024), 2)):
+        scalePerPixel = 0.28 / 1024
         scale = scalePerPixel * height
-    if (round((width/height),2)==round((1600/1024),2)):
-        scalePerPixel = 0.36/1024
+    if (round((width / height), 2) == round((1600 / 1024), 2)):
+        scalePerPixel = 0.36 / 1024
         scale = scalePerPixel * height
-
-
 
 
 # """-----------------------------------MENU---------------------------------------#
@@ -118,9 +123,49 @@ def createMenu():
     menu.add_cascade(label="Einstellungen", menu=editMenu)
     editMenu.add_command(label="Screenmode", command=fullscreen)
     editMenu.add_command(label='Über The Game', command=aboutTG)
+    #editMenu.add_command(label='Namenswahl', command=getplayername)
 
 
 # """-----------------------------------IMAGE---------------------------------------#
+def getplayername():
+    global check_name
+    if check_state:
+        """ablagestapelVorlageFrame.pack_forget()
+        ablagestapelFrame.pack_forget()
+        handkartenFrame.pack_forget()
+        """
+        print("Wir sind hier")
+        global group
+        group = LabelFrame(root, text="Willkommen.", padx=5, pady=5)
+        group.pack(padx=500, pady=450)
+        getnameLabel = Label(group, text="Gib deinen Namen ein: ")
+        getnameLabel.pack()
+        global player1getname
+        player1getname = Entry(group)
+        player1getname.pack()
+        player1getname.bind('<Return>', entername)
+
+
+
+def entername(event):
+    global check_state
+    group.pack_forget()
+    global player1name
+    player1name = str(player1getname.get())
+    print(player1name)
+    global name_trigger
+    name_trigger = True
+    if name_trigger:
+        check_state = False
+        check_name = True
+        print(check_name)
+        root.update_idletasks()
+
+
+
+
+
+
 def createImage():
     global scale
     global font
@@ -158,9 +203,10 @@ def createImage():
     player1NF = Frame(sideFrameleft)
     player1NF.pack(side="top")
 
+    global player1NL
     player1NL = Label(player1NF, text="Spieler1", bg="red")
     player1NL.pack()
-
+    player1NL.configure(text=player1name)
 
     nachziehStapelFrame = Frame(sideFrameleft)
     nachziehStapelFrame.pack(side='bottom')
@@ -179,7 +225,6 @@ def createImage():
 
     canvas.create_image(0, 0, image=nachziehStapel, anchor=NW)
 
-    
     nachziehStapelFrame.update()
     leftframewidth = nachziehStapelFrame.winfo_width()
     leftframeheight = nachziehStapelFrame.winfo_height()
@@ -194,7 +239,7 @@ def createImage():
     player2NL = Label(player2NF, text="Spieler2", bg="red")
     player2NL.pack(side="top")
 
-
+    global ablagestapelVorlageFrame
     ablagestapelVorlageFrame = Frame(root)
     ablagestapelVorlageFrame.pack(side="top")
 
@@ -228,7 +273,6 @@ def createImage():
 
 
 def erzeugeAblageStapelVorlage(frame, scale, h, w, img, bigNumber, smallNumber):
-
     global font
     fontsizesmall = 50
     fontsizebig = 110
@@ -388,10 +432,10 @@ def createButtons():
     bottomFrame = Frame(root)
     bottomFrame.pack()
 
+    """
     title = Label(topFrame, text="THE GAME")
     title.pack()
 
     quit = Button(bottomFrame, text="Beenden", command=root.destroy)
     quit.pack()
-
-
+    """
