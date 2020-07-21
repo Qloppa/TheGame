@@ -88,6 +88,19 @@ def aboutTG():
                                        "Ver. " + TG_Version + "." + rev)
     aboutLabel.pack()
 
+def settings():
+    global settingswindow
+    settingswindow = Toplevel(root, bg="red")
+    settingswindow.overrideredirect(1)
+    #newWindow.title("Einstellungen")
+    #newWindow.iconbitmap(_GAME_ICON)
+    #x = root.winfo_width()
+    #y = root.winfo_height()
+    #size = str(str(x) + "x" + str(y))
+    settingswindow.geometry("+%d+%d" % (499,232))
+    aboutLabel = Label(settingswindow, text="COMMING SOON!")
+    aboutLabel.pack()
+
 
 def fullscreen():
     global check_FS
@@ -123,7 +136,8 @@ def createMenu():
     subMenu.add_separator()
     subMenu.add_command(label="Beenden", command=root.destroy)
     editMenu = Menu(menu, tearoff=0)
-    menu.add_cascade(label="Einstellungen", menu=editMenu)
+    menu.add_cascade(label="Optionen", menu=editMenu)
+    editMenu.add_command(label="Einstellungen", command=settings)
     editMenu.add_command(label="Screenmode", command=fullscreen)
     editMenu.add_command(label='Über The Game', command=aboutTG)
     #editMenu.add_command(label='Namenswahl', command=getplayername)

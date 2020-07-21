@@ -5,7 +5,7 @@ from Model import Kartenstapel, Handkarten, Spielkarte, Spieler, AblageStapelBer
 import View
 
 TG_Version = "0.0.5"
-Final = False
+Final = True
 
 stapelGroesse = 99
 
