@@ -58,34 +58,32 @@ def buttonPressed(event):
 
 root = View.createWindow()
 
-View.getplayername()
+#print(f"Spielername: {View.player1name}")
+print("geht los")
+View.createImage()
+View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
+root.bind("<Button-1>", buttonPressed)
+View.createButtons()
+root.update()
+# """-----------------------------------GUI---------------------------------------#
 
-if View.check_state == False:
-    print("geht los")
-    View.createImage()
-    View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
-    root.bind("<Button-1>", buttonPressed)
-    View.createButtons()
-    root.update()
-    # """-----------------------------------GUI---------------------------------------#
+print("The Game:")
 
-    print("The Game:")
+print("Kartenstapel:")
 
-    print("Kartenstapel:")
+for karte in spieler1.handKarten.handKarten:
+    View.handKarteAnzeigen(karte)
 
-    for karte in spieler1.handKarten.handKarten:
-        View.handKarteAnzeigen(karte)
+print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
 
-    print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
+# ablegeKarte = input("welche Karte willst du spielen? ")
 
-    # ablegeKarte = input("welche Karte willst du spielen? ")
+# spieler1.karteAblegen(View.getClickedValue())
 
-    # spieler1.karteAblegen(View.getClickedValue())
+print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
 
-    print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
+print("Kartenstapel:")
 
-    print("Kartenstapel:")
-
-    print(list(map(lambda x: x.getValue(), KS.spielKarten)))
+print(list(map(lambda x: x.getValue(), KS.spielKarten)))
 
 root.mainloop()

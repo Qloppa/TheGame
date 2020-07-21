@@ -19,11 +19,9 @@ ablagestapelFrame = None
 check_FS = None
 scale = None
 font = "Chiller"  # Fonts: Chiller, Castellar
-check_state = True
 ablagestapelVorlageFrame = None
+check_state = False
 player1name = None
-check_name = False
-name_trigger = False
 
 
 # screenmode = None
@@ -38,6 +36,8 @@ def init(version, revNumber):
 
 def createWindow():
     global root
+    global player1name
+    global check_state
     root = Tk()
     root.title("THE GAME!")
     root.iconbitmap(_GAME_ICON)
@@ -48,6 +48,9 @@ def createWindow():
     global check_FS
     check_FS = False
     createMenu()
+
+    getplayername()
+
     return root
 
 
@@ -96,7 +99,7 @@ def fullscreen():
         actualheight = root.winfo_height()
         print("Kein Vollbild")
         root.attributes('-fullscreen', True)
-        global screenmode
+        # global screenmode
         # screenmode = "Vollbild"
         check_FS = True
     else:
@@ -128,12 +131,8 @@ def createMenu():
 
 # """-----------------------------------IMAGE---------------------------------------#
 def getplayername():
-    global check_name
-    if check_state:
-        """ablagestapelVorlageFrame.pack_forget()
-        ablagestapelFrame.pack_forget()
-        handkartenFrame.pack_forget()
-        """
+    global check_state
+    if check_state == False:
         print("Wir sind hier")
         global group
         group = LabelFrame(root, text="Willkommen.", padx=5, pady=5)
@@ -146,25 +145,15 @@ def getplayername():
         player1getname.bind('<Return>', entername)
 
 
-
 def entername(event):
     global check_state
-    group.pack_forget()
     global player1name
+    global group
     player1name = str(player1getname.get())
-    print(player1name)
-    global name_trigger
-    name_trigger = True
-    if name_trigger:
-        check_state = False
-        check_name = True
-        print(check_name)
-        root.update_idletasks()
-
-
-
-
-
+    check_state = True
+    # root.update_idletasks()
+    #group.pack_forget()
+    #group.destroy()
 
 def createImage():
     global scale
