@@ -22,10 +22,10 @@ font = "Chiller"  # Fonts: Chiller, Castellar
 ablagestapelVorlageFrame = None
 check_state = False
 player1name = None
-
-
-# screenmode = None
-
+settingswindow = None
+skinchoice = None
+skin = None
+skinversion = None
 
 def init(version, revNumber):
     global TG_Version
@@ -48,8 +48,6 @@ def createWindow():
     global check_FS
     check_FS = False
     createMenu()
-
-    getplayername()
 
     return root
 
@@ -90,16 +88,18 @@ def aboutTG():
 
 def settings():
     global settingswindow
-    settingswindow = Toplevel(root, bg="red")
+    global player1name
+    settingswindow = tk.Toplevel(root)
     settingswindow.overrideredirect(1)
-    #newWindow.title("Einstellungen")
-    #newWindow.iconbitmap(_GAME_ICON)
+    settingswindow.title("Einstellungen")
+    settingswindow.iconbitmap(_GAME_ICON)
+    settingswindow.configure(pady=10)
+    bind_esc()
     #x = root.winfo_width()
     #y = root.winfo_height()
     #size = str(str(x) + "x" + str(y))
-    settingswindow.geometry("+%d+%d" % (499,232))
-    aboutLabel = Label(settingswindow, text="COMMING SOON!")
-    aboutLabel.pack()
+    getplayername()
+    skinchoose()
 
 
 def fullscreen():
@@ -125,8 +125,8 @@ def fullscreen():
 
 
 def createMenu():
-    menu = Menu(root)
-    subMenu = Menu(menu, tearoff=0)
+    menu = tk.Menu(root)
+    subMenu = tk.Menu(menu, tearoff=0)
     root.config(menu=menu)
 
     menu.add_cascade(label="Spiel", menu=subMenu)
@@ -135,7 +135,7 @@ def createMenu():
     subMenu.add_command(label="Spiel Speichern", command=doNothing)
     subMenu.add_separator()
     subMenu.add_command(label="Beenden", command=root.destroy)
-    editMenu = Menu(menu, tearoff=0)
+    editMenu = tk.Menu(menu, tearoff=0)
     menu.add_cascade(label="Optionen", menu=editMenu)
     editMenu.add_command(label="Einstellungen", command=settings)
     editMenu.add_command(label="Screenmode", command=fullscreen)
@@ -145,19 +145,16 @@ def createMenu():
 
 # """-----------------------------------IMAGE---------------------------------------#
 def getplayername():
-    global check_state
-    if check_state == False:
-        print("Wir sind hier")
-        global group
-        group = LabelFrame(root, text="Willkommen.", padx=5, pady=5)
-        group.pack(padx=500, pady=450)
-        getnameLabel = Label(group, text="Gib deinen Namen ein: ")
-        getnameLabel.pack()
-        global player1getname
-        player1getname = Entry(group)
-        player1getname.pack()
-        player1getname.bind('<Return>', entername)
-
+    print("Wir sind hier")
+    global group
+    group = tk.LabelFrame(settingswindow, text="Name:", padx=5, pady=5)
+    group.pack(side="left")
+    getnameLabel = tk.Label(group, text="Gib deinen Namen ein: ")
+    getnameLabel.pack()
+    global player1getname
+    player1getname = tk.Entry(group)
+    player1getname.pack()
+    player1getname.bind('<Return>', entername)
 
 def entername(event):
     global check_state
@@ -165,9 +162,60 @@ def entername(event):
     global group
     player1name = str(player1getname.get())
     check_state = True
-    # root.update_idletasks()
-    #group.pack_forget()
-    #group.destroy()
+    player1NL.configure(text=player1name)
+    settingswindow.destroy()
+
+def bind_esc():
+    def close(event):
+        settingswindow.destroy()  # if you want to exit the entire thing
+
+    settingswindow.bind('<Escape>', close)
+
+def chooseskin():
+    global skinchoice
+    global skin
+    global skinversion
+
+    if skinchoice == "Death":
+        chosenskin = "resources/Kartengrafiken/Spielkarte_MUSTER_0.png"
+        return chosenskin
+
+    if skinchoice == "Unicorn":
+        chosenskin = "resources/Kartengrafiken/Spielkarte_MUSTER_0_unicorn.png"
+        return chosenskin
+
+
+def skinchoose():
+    skin = tk.LabelFrame(settingswindow, text="Skins:", padx=5, pady=5)
+    skin.pack(side="right")
+    getskinlabel = tk.Label(skin, text="Wähle deinen Kartentheme: ")
+    getskinlabel.pack()
+    # data
+    data = {
+        'Death': "don't dead open inside",
+        'Unicorn': "Pink fluffy unicorns...",
+        'Comming Soon': "What would you do with...",
+    }
+
+    # updates text
+    def useskin(new_value):
+        global skinchoice
+        display.config(text=data[new_value])
+
+        skinchoice = data[new_value]
+        #chooseskin()
+        #createImage()
+        root.update_idletasks()
+        print("Skinupdate")
+        # create a dropdown list
+
+    var = tk.StringVar()
+    var.set(str(skinchoice))
+    p = tk.OptionMenu(skin, var, *data, command=useskin)
+    p.pack()
+
+    display = tk.Label(skin)
+    display.pack()
 
 def createImage():
     global scale
