@@ -2,7 +2,7 @@ import random
 import numpy as np
 from VersionControl import VersionControl
 from Model import Kartenstapel, Handkarten, Spielkarte, Spieler, AblageStapelBereich, AblageStapel
-from View import SampleApp, GameFrame
+import View
 
 TG_Version = "0.0.5"
 Final = True
@@ -32,67 +32,58 @@ else:
     VC.releaseRev()
 
 # """-----------------------------------GUI---------------------------------------#
-app = SampleApp()
 
-#
-
-try:
-    
-    app.init(TG_Version, VC.useRev())
+View.init(TG_Version, VC.useRev())
 
 
-    def buttonPressed(event):
-        value = app.getClickedValue()
-        print(f"karte geklickt: {value}")
-        app.setClickedValue(0)
+def buttonPressed(event):
+    value = View.getClickedValue()
+    print(f"karte geklickt: {value}")
+    View.setClickedValue(0)
 
-        if value > 0:
-            print(f"value: {value}")
-            global abgelegteKarte
-            abgelegteKarte = spieler1.karteAblegen(value)
-            print(f"abgelegteKarte: {abgelegteKarte.value}")
-            app.deleteHandkarten()
-            app.setClickedValue(0)
-            for karte in spieler1.handKarten.handKarten:
-                app.handKarteAnzeigen(karte)
-        if value < 0:
-            app.deleteAblagestapel()
-            ablageStapelBereich.updateAblageStapel(value + 4, abgelegteKarte)
-            app.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
-
-
-    #root = theGame.createWindow()
-
-    #print(f"Spielername: {View.player1name}")
-    print("geht los")
-    #theGame.createImage()
-    app.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
-    #root.bind("<Button-1>", buttonPressed)
-    app.createButtons()
-    #root.update()
+    if value > 0:
+        print(f"value: {value}")
+        global abgelegteKarte
+        abgelegteKarte = spieler1.karteAblegen(value)
+        print(f"abgelegteKarte: {abgelegteKarte.value}")
+        View.deleteHandkarten()
+        View.setClickedValue(0)
+        for karte in spieler1.handKarten.handKarten:
+            View.handKarteAnzeigen(karte)
+    if value < 0:
+        View.deleteAblagestapel()
+        ablageStapelBereich.updateAblageStapel(value + 4, abgelegteKarte)
+        View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
 
 
+root = View.createWindow()
 
-    print("The Game:")
+#print(f"Spielername: {View.player1name}")
+print("geht los")
+View.createImage()
+View.aktualisiereAblageStapel(ablageStapelBereich.ablageStapel)
+root.bind("<Button-1>", buttonPressed)
+View.createButtons()
+root.update()
+# """-----------------------------------GUI---------------------------------------#
 
-    print("Kartenstapel:")
+print("The Game:")
 
-    for karte in spieler1.handKarten.handKarten:
-        app.handKarteAnzeigen(karte)
+print("Kartenstapel:")
 
-    print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
+for karte in spieler1.handKarten.handKarten:
+    View.handKarteAnzeigen(karte)
 
-    # ablegeKarte = input("welche Karte willst du spielen? ")
+print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
 
-    # spieler1.karteAblegen(View.getClickedValue())
+# ablegeKarte = input("welche Karte willst du spielen? ")
 
-    print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
+# spieler1.karteAblegen(View.getClickedValue())
 
-    print("Kartenstapel:")
+print(list(map(lambda x: x.getValue(), spieler1.handKarten.handKarten)))
 
-    print(list(map(lambda x: x.getValue(), KS.spielKarten)))
+print("Kartenstapel:")
 
-except:
-    pass
+print(list(map(lambda x: x.getValue(), KS.spielKarten)))
 
-app.mainloop()
+root.mainloop()
