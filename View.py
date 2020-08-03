@@ -1,5 +1,4 @@
 from tkinter import *
-import tkinter as tk
 from PIL import ImageTk
 from PIL import Image
 
@@ -89,7 +88,7 @@ def aboutTG():
 def settings():
     global settingswindow
     global player1name
-    settingswindow = tk.Toplevel(root)
+    settingswindow = Toplevel(root)
     settingswindow.overrideredirect(1)
     settingswindow.title("Einstellungen")
     settingswindow.iconbitmap(_GAME_ICON)
@@ -125,8 +124,8 @@ def fullscreen():
 
 
 def createMenu():
-    menu = tk.Menu(root)
-    subMenu = tk.Menu(menu, tearoff=0)
+    menu = Menu(root)
+    subMenu = Menu(menu, tearoff=0)
     root.config(menu=menu)
 
     menu.add_cascade(label="Spiel", menu=subMenu)
@@ -135,7 +134,7 @@ def createMenu():
     subMenu.add_command(label="Spiel Speichern", command=doNothing)
     subMenu.add_separator()
     subMenu.add_command(label="Beenden", command=root.destroy)
-    editMenu = tk.Menu(menu, tearoff=0)
+    editMenu = Menu(menu, tearoff=0)
     menu.add_cascade(label="Optionen", menu=editMenu)
     editMenu.add_command(label="Einstellungen", command=settings)
     editMenu.add_command(label="Screenmode", command=fullscreen)
@@ -147,12 +146,12 @@ def createMenu():
 def getplayername():
     print("Wir sind hier")
     global group
-    group = tk.LabelFrame(settingswindow, text="Name:", padx=5, pady=5)
+    group = LabelFrame(settingswindow, text="Name:", padx=5, pady=5)
     group.pack(side="left")
-    getnameLabel = tk.Label(group, text="Gib deinen Namen ein: ")
+    getnameLabel = Label(group, text="Gib deinen Namen ein: ")
     getnameLabel.pack()
     global player1getname
-    player1getname = tk.Entry(group)
+    player1getname = Entry(group)
     player1getname.pack()
     player1getname.bind('<Return>', entername)
 
@@ -186,9 +185,9 @@ def chooseskin():
 
 
 def skinchoose():
-    skin = tk.LabelFrame(settingswindow, text="Skins:", padx=5, pady=5)
+    skin = LabelFrame(settingswindow, text="Skins:", padx=5, pady=5)
     skin.pack(side="right")
-    getskinlabel = tk.Label(skin, text="Wähle deinen Kartentheme: ")
+    getskinlabel = Label(skin, text="Wähle deinen Kartentheme: ")
     getskinlabel.pack()
     # data
     data = {
@@ -209,12 +208,12 @@ def skinchoose():
         print("Skinupdate")
         # create a dropdown list
 
-    var = tk.StringVar()
+    var = StringVar()
     var.set(str(skinchoice))
-    p = tk.OptionMenu(skin, var, *data, command=useskin)
+    p = OptionMenu(skin, var, *data, command=useskin)
     p.pack()
 
-    display = tk.Label(skin)
+    display = Label(skin)
     display.pack()
 
 def createImage():
@@ -271,7 +270,7 @@ def createImage():
     canvasLabel = Label(nachziehStapelFrame, text="Verbleibende Karten:", font=actualfontcorner)
     canvasLabel.pack(side='top')
 
-    canvas = tk.Canvas(nachziehStapelFrame, width=w, height=h)
+    canvas = Canvas(nachziehStapelFrame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
     canvas.create_image(0, 0, image=nachziehStapel, anchor=NW)
@@ -331,7 +330,7 @@ def erzeugeAblageStapelVorlage(frame, scale, h, w, img, bigNumber, smallNumber):
     smallNumberFont = f"{font} {str(int(fontsizesmall * scale))}"
     bigNumberFont = f"{font} {str(int(fontsizebig * scale))}"
 
-    canvas = tk.Canvas(frame, width=w, height=h)
+    canvas = Canvas(frame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
     canvas.create_image(0, 0, image=img, anchor=NW)
@@ -345,7 +344,7 @@ def erzeugeAblageStapelVorlage(frame, scale, h, w, img, bigNumber, smallNumber):
 
 def erzeugeAblageKarte(frame, scale, h, w, index):
     print(f"erzeugeAblageKarte {index}")
-    canvas = tk.Canvas(frame, width=w, height=h)
+    canvas = Canvas(frame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
     canvas.create_image(0, 0, image=platzhalter, anchor=NW)
@@ -372,7 +371,7 @@ def aktuelisiereAblageKarte(frame, index, value):
         actualfontcorner = f"{font} {str(int(fontsizecorner * scale))}"
         actualfontmiddle = f"{font} {str(int(fontsizemiddle * scale))}"
 
-        canvas = tk.Canvas(frame, width=w, height=h)
+        canvas = Canvas(frame, width=w, height=h)
         canvas.pack(side='top', fill=None, expand=False)
 
         canvas.create_image(0, 0, image=background, anchor=NW)
@@ -446,7 +445,7 @@ def handKarteAnzeigen(spielKarte):
     w = 439 * scale
     h = 638 * scale
 
-    canvas = tk.Canvas(cardFrame, width=w, height=h)
+    canvas = Canvas(cardFrame, width=w, height=h)
     canvas.pack(side='top', fill=None, expand=False)
 
     canvas.create_image(0, 0, image=background, anchor=NW)
